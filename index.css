@@ -1,0 +1,43 @@
+body {
+    background-color: rgb(132, 132, 132);
+    background-size: cover;
+}
+
+header {
+    margin: 30px auto 30px auto;
+}
+
+main {
+    margin: 200px auto 220px auto;
+}
+
+footer {
+    position: relative;
+    text-align: center;
+}
+
+#avatar {
+    display: block;
+    width: 15%;
+    margin: 0px auto 15px auto;
+}
+
+#header-name {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Alata', sans-serif;
+    margin-left: 10px;
+}
+#header-name:hover {
+    color: black;
+}
+
+.link {
+    width: 35px;
+    margin: 10px 8px 10px 8px;
+    display: inline-block;
+}
+.link:hover {
+    filter: opacity(50%);
+}
