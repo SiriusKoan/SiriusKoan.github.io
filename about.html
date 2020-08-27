@@ -6,6 +6,8 @@
     <title>About</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <script src="index.js"></script>
+    <script src="functions.js"></script>
     <style>
         body {
             background-image: linear-gradient(to right, #848484, #848484, #4e4e4e, #343535, #1d1e1e);
@@ -13,7 +15,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="about_animation();">
     <header>
         <nav>
             <a href="/" class="header-content">SiriusKoan</a>
@@ -21,13 +23,13 @@
         </nav>
     </header>
     <main>
-        <a href="/"><img src="./img/me.jpg" width="15%"></a>
-        <ul class="about-content">
+        <a href="/"><img src="./img/me.jpg" id="avatar" style="margin: 0px;"></a>
+        <ul class="about-content" id="about-content">
             <li>Studying in HSNU</li>
         </ul>
     </main>
     <footer>
-        <p style="color: aliceblue;">© 2020 SiriusKoan</p>
+        <p id="copyright">© 2020 SiriusKoan</p>
     </footer>
 </body>
 </html>
