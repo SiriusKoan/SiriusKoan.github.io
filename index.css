@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: rgb(132, 132, 132);
     background-size: cover;
@@ -8,7 +12,7 @@ header {
 }
 
 main {
-    margin: 200px auto 220px auto;
+    margin: 200px auto 190px auto;
 }
 
 footer {
@@ -20,16 +24,26 @@ footer {
     display: block;
     width: 15%;
     margin: 0px auto 15px auto;
+    border-radius: 28%;
 }
 
-#header-name {
+#typing-name {
+    display: block;
+    margin: 0px auto 0px auto;
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 30px;
+    text-align: center;  
+}
+
+.header-content {
     color: white;
     text-decoration: none;
     font-size: 18px;
     font-family: 'Alata', sans-serif;
     margin-left: 10px;
 }
-#header-name:hover {
+.header-content:hover {
     color: black;
 }
 
