@@ -1,12 +1,3 @@
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: rgb(132, 132, 132);
-    background-size: cover;
-}
-
 header {
     margin: 30px auto 30px auto;
 }
@@ -25,6 +16,8 @@ footer {
     width: 15%;
     margin: 0px auto 15px auto;
     border-radius: 28%;
+    opacity: 0;
+    transition: opacity 2s ease-in;
 }
 
 #typing-name {
@@ -36,6 +29,12 @@ footer {
     text-align: center;  
 }
 
+#copyright {
+    color: aliceblue;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
 .header-content {
     color: white;
     text-decoration: none;
@@ -44,14 +43,20 @@ footer {
     margin-left: 10px;
 }
 .header-content:hover {
-    color: black;
+    filter: opacity(50%);
 }
 
 .link {
     width: 35px;
     margin: 10px 8px 10px 8px;
     display: inline-block;
+    opacity: 0;
+    transition: opacity 1s ease-in;
 }
 .link:hover {
     filter: opacity(50%);
+}
+
+.about-content {
+    color: white;
 }
