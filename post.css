@@ -5,8 +5,14 @@ body {
     background-color: #343535;
 }
 main {
-    margin-left: 400px;
-    margin-right: 400px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+@media (max-width: 750px) {
+    main {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
 }
 
 .post_catalog {
