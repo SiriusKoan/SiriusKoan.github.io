@@ -1,14 +1,13 @@
+body {
+    background-image: radial-gradient(circle, #848484, #848484, #4e4e4e, #343535, #1d1e1e);
+    background-size: cover;
+}
 header {
     margin: 30px auto 30px auto;
 }
 
 main {
-    margin: 200px auto 190px auto;
-}
-
-footer {
-    position: relative;
-    text-align: center;
+    margin: 200px auto 175px auto;
 }
 
 #avatar {
@@ -19,6 +18,14 @@ footer {
     opacity: 0;
     transition: opacity 2s ease-in;
 }
+@media (max-width: 800px) {
+    #avatar {
+        width: 30%;
+    }
+    main {
+        margin-top: 250px;
+    }
+}
 
 #typing-name {
     display: block;
@@ -26,10 +33,15 @@ footer {
     color: white;
     font-family: 'Dancing Script', cursive;
     font-size: 30px;
-    text-align: center;  
+    text-align: center;
 }
 
 #copyright {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+    width: 99%;
+    text-align: center;
     color: aliceblue;
     opacity: 0;
     transition: opacity 1s ease-in;
