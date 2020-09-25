@@ -19,9 +19,6 @@ main {
     transition: opacity 2s ease-in;
 }
 @media (max-width: 800px) {
-    #avatar {
-        width: 30%;
-    }
     main {
         margin-top: 250px;
     }
