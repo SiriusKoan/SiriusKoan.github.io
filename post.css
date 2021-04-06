@@ -1,14 +1,15 @@
 header {
     margin: 30px auto 30px auto;
 }
+
 body {
     background-color: #343535;
 }
+
 main {
     margin-left: 300px;
     margin-right: 300px;
 }
-
 
 .post_catalog {
     color: aliceblue;
@@ -16,13 +17,16 @@ main {
     text-decoration: none;
     font-size: 18px;
 }
+
 .post_catalog a {
     color: aliceblue;
     text-decoration: none;
 }
+
 .post_catalog a:hover {
     text-decoration: underline;
 }
+
 .post_catalog .date {
     float: right;
 }
@@ -32,11 +36,14 @@ main {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
 }
+
 .post_content a {
+    color: #BABABA;
     text-decoration: none;
 }
+
 .post_content a:hover {
-    color: darkgrey;
+    color: gray;
     text-decoration: underline;
 }
 
@@ -47,27 +54,55 @@ main {
     font-family: 'Alata', sans-serif;
     margin-left: 10px;
 }
+
 .header-content:hover {
     filter: opacity(50%);
 }
 
-
 #copyright {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    bottom: 0px;
     width: 99%;
     margin-bottom: 20px;
     color: aliceblue;
     text-align: center;
 }
 
-
 @media (max-width: 750px) {
     main {
-        margin-left: 80px;
-        margin-right: 80px;
+        margin-left: 70px;
+        margin-right: 70px;
     }
     .post_content {
-        font-size: 90%;
+        font-size: 88%;
     }
+}
+
+#top-button {
+    background-color: #7c8081;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    align-items: center;
+    border-radius: 4px;
+    position: fixed;
+    z-index: 1000;
+    bottom: 30px;
+    right: 30px;
+    display: table;
+    text-decoration: none;
+    color: white;
+    display: table;
+    -moz-box-sizing: border-box;
+}
+
+#top-button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#top-button span {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
 }

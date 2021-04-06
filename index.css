@@ -1,6 +1,7 @@
 body {
     background-image: radial-gradient(circle, #848484, #848484, #4e4e4e, #343535, #1d1e1e);
     background-size: cover;
+    margin: 0px;
 }
 header {
     margin: 30px auto 30px auto;
@@ -20,7 +21,7 @@ main {
 }
 @media (max-width: 800px) {
     main {
-        margin-top: 250px;
+        margin-top: 230px;
     }
 }
 
@@ -37,7 +38,7 @@ main {
     position: absolute;
     bottom: 0;
     margin-bottom: 20px;
-    width: 99%;
+    width: 100%;
     text-align: center;
     color: aliceblue;
     opacity: 0;
@@ -64,6 +65,14 @@ main {
 }
 .link:hover {
     filter: opacity(50%);
+}
+.link img {
+    width: 100%;
+}
+@media (max-width: 800px) {
+    .link img{
+        width: 70%;
+    }
 }
 
 .about-content {
