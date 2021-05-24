@@ -19,9 +19,16 @@ main {
 #avatar {
     display: flex;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 2s ease-in;
     margin-bottom: 20px;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    transition: 0.3s ease-in;
+}
+
+#avatar:hover {
+    filter: saturate(105%);
+    transform: scale(1.05);
 }
 
 #avatar img {
@@ -76,20 +83,28 @@ main {
     display: inline-block;
     opacity: 0;
     transition: opacity 1s ease-in;
+    animation-name: fadeIn;
+    animation-delay: 3s; /* wait for avatar showing up and typing effect */
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
 .link:hover {
     filter: opacity(50%);
+    transform: scale(1.1);
 }
 
 .link img {
     width: 100%;
 }
 
-.about-content {
-    color: white;
-    opacity: 0;
-    transition: opacity 1s ease-in;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 800px) {
