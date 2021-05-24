@@ -13,12 +13,9 @@ function homepage_animation() {
     setTimeout(typing_effect, 2000);
 
     setTimeout(show_icon, 3000);
-
-    setTimeout(show_copyright, 4000);
 }
 
 function about_animation() {
     show_avatar();
     setTimeout(function() {show_content("about-content")}, 2000);
-    setTimeout(show_copyright, 3000);
 }

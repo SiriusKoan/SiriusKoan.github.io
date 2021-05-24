@@ -3,26 +3,30 @@ body {
     background-size: cover;
     margin: 0px;
 }
+
 header {
     margin: 30px auto 30px auto;
 }
 
 main {
-    margin: 200px auto 175px auto;
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #avatar {
-    display: block;
-    width: 15%;
-    margin: 0px auto 15px auto;
-    border-radius: 28%;
+    display: flex;
+    justify-content: center;
     opacity: 0;
     transition: opacity 2s ease-in;
+    margin-bottom: 20px;
 }
-@media (max-width: 800px) {
-    main {
-        margin-top: 230px;
-    }
+
+#avatar img {
+    width: 200px;
+    border-radius: 28%;
 }
 
 #typing-name {
@@ -32,6 +36,7 @@ main {
     font-family: 'Dancing Script', cursive;
     font-size: 30px;
     text-align: center;
+    height: 40px;
 }
 
 #copyright {
@@ -41,8 +46,16 @@ main {
     width: 100%;
     text-align: center;
     color: aliceblue;
-    opacity: 0;
     transition: opacity 1s ease-in;
+}
+
+#copyright a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+#copyright a:hover {
+    text-decoration: underline;
 }
 
 .header-content {
@@ -52,6 +65,7 @@ main {
     font-family: 'Alata', sans-serif;
     margin-left: 10px;
 }
+
 .header-content:hover {
     filter: opacity(50%);
 }
@@ -63,20 +77,26 @@ main {
     opacity: 0;
     transition: opacity 1s ease-in;
 }
+
 .link:hover {
     filter: opacity(50%);
 }
+
 .link img {
     width: 100%;
-}
-@media (max-width: 800px) {
-    .link img{
-        width: 70%;
-    }
 }
 
 .about-content {
     color: white;
     opacity: 0;
     transition: opacity 1s ease-in;
+}
+
+@media (max-width: 800px) {
+    #avatar img {
+        width: 150px;
+    }
+    .link img {
+        width: 70%;
+    }
 }

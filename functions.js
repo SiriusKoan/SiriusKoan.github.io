@@ -10,11 +10,6 @@ function show_icon() {
     document.getElementById("telegram").style.opacity = 1;
 }
 
-// copyright
-function show_copyright() {
-    document.getElementById("copyright").style.opacity = 1;
-}
-
 // show specific element
 function show_content(id) {
     document.getElementById(id).style.opacity = 1;
