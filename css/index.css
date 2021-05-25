@@ -4,10 +4,6 @@ body {
     margin: 0px;
 }
 
-header {
-    margin: 30px auto 30px auto;
-}
-
 main {
     min-height: 88vh;
     display: flex;
@@ -44,37 +40,6 @@ main {
     font-size: 30px;
     text-align: center;
     height: 40px;
-}
-
-#copyright {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: center;
-    color: aliceblue;
-    transition: opacity 1s ease-in;
-}
-
-#copyright a {
-    color: aliceblue;
-    text-decoration: none;
-}
-
-#copyright a:hover {
-    text-decoration: underline;
-}
-
-.header-content {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-family: 'Alata', sans-serif;
-    margin-left: 10px;
-}
-
-.header-content:hover {
-    filter: opacity(50%);
 }
 
 .link {
