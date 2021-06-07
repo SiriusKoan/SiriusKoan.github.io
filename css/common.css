@@ -13,22 +13,3 @@ header {
 .header-content:hover {
     filter: opacity(50%);
 }
-
-#copyright {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: center;
-    color: aliceblue;
-    transition: opacity 1s ease-in;
-}
-
-#copyright a {
-    color: aliceblue;
-    text-decoration: none;
-}
-
-#copyright a:hover {
-    text-decoration: underline;
-}

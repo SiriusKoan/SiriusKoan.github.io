@@ -22,14 +22,15 @@ main {
     transition: 0.3s ease-in;
 }
 
-#avatar:hover {
-    filter: saturate(105%);
-    transform: scale(1.05);
-}
-
 #avatar img {
     width: 200px;
     border-radius: 28%;
+    transition: 0.3s ease-in;
+}
+
+#avatar img:hover {
+    filter: saturate(105%);
+    transform: scale(1.05);
 }
 
 #typing-name {
@@ -40,6 +41,25 @@ main {
     font-size: 30px;
     text-align: center;
     height: 40px;
+    text-shadow: 0 0 5px white;
+}
+#copyright {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: aliceblue;
+    transition: opacity 1s ease-in;
+}
+
+#copyright a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+#copyright a:hover {
+    text-decoration: underline;
 }
 
 .link {
@@ -49,7 +69,8 @@ main {
     opacity: 0;
     transition: opacity 1s ease-in;
     animation-name: fadeIn;
-    animation-delay: 3s; /* wait for avatar showing up and typing effect */
+    animation-delay: 3s;
+    /* wait for avatar showing up and typing effect */
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
