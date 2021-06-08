@@ -1,5 +1,5 @@
 header {
-    margin: 30px auto 30px auto;
+    margin: 30px auto 30px 20px;
 }
 
 .header-content {
@@ -12,4 +12,24 @@ header {
 
 .header-content:hover {
     filter: opacity(50%);
+}
+
+#copyright {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: aliceblue;
+    transition: opacity 1s ease-in;
+    font-family: 'Alata', sans-serif;
+    font-size: 15px;
+}
+
+#copyright a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+#copyright a:hover {
+    text-decoration: underline;
 }

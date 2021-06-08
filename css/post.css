@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #343535;
     margin: 0px;
@@ -7,6 +11,7 @@ main {
     min-height: 70vh;
     margin-left: 25vw;
     margin-right: 25vw;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 .post_content {
@@ -22,7 +27,6 @@ main {
 
 .post_content p {
     color: white;
-    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     text-indent: 36px;
     line-height: 34px;
@@ -33,6 +37,9 @@ main {
 .post_content a {
     color: #BABABA;
     text-decoration: none;
+    display: block;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .post_content a:hover {
@@ -69,10 +76,9 @@ main {
 
 #top-button {
     background-color: #7c8081;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     text-align: center;
-    align-items: center;
     border-radius: 4px;
     position: fixed;
     z-index: 1000;
@@ -97,20 +103,6 @@ main {
 
 #copyright {
     margin-top: 100px;
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: center;
-    color: aliceblue;
-    transition: opacity 1s ease-in;
-}
-
-#copyright a {
-    color: aliceblue;
-    text-decoration: none;
-}
-
-#copyright a:hover {
-    text-decoration: underline;
 }
 
 @media (max-width: 750px) {
