@@ -12,6 +12,9 @@ main {
     margin-left: 25vw;
     margin-right: 25vw;
     font-family: 'Noto Sans TC', sans-serif;
+    animation-name: showUp;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
 }
 
 .post_content {
@@ -71,6 +74,7 @@ main {
     font-family: 'Noto Sans TC', sans-serif;
     text-decoration: none;
     font-size: 18px;
+    text-underline-offset: 3px;
 }
 
 .post_catalog a {
@@ -93,10 +97,21 @@ main {
     font-weight: normal;
 }
 
+#title a {
+    color: white;
+    text-decoration: none;
+}
+
+#title a:hover {
+    opacity: 0.5;
+    text-decoration: none;
+    color: white;
+}
+
 #toc {
     font-size: 16px;
     position: fixed;
-    right: 30px;
+    right: 60px;
     top: 70px;
     color: white;
 }
@@ -157,5 +172,16 @@ main {
     }
     #toc {
         display: none;
+    }
+}
+
+@keyframes showUp {
+    from {
+        transform: translate(0, 100px);
+        opacity: 0;
+    }
+    to {
+        transform: none;
+        opacity: 1;
     }
 }
