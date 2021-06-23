@@ -11,7 +11,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-    <script src="/index.js"></script>
+    <script>
+        function homepage_animation() {
+            var name = "SiriusKoan";
+            var i = 0;
+            function typing_effect() {
+                if (i < name.length) {
+                    document.getElementById("typing-name").innerHTML += name.charAt(i);
+                    i++;
+                    setTimeout(typing_effect, 100);
+                }
+            }
+            setTimeout(typing_effect, 2000);
+        }
+    </script>
 </head>
 
 <body onload="homepage_animation();">
@@ -24,12 +37,7 @@
     <main>
         <a href="/" id="avatar"><img src="./img/me.jpg"></a>
         <p id="typing-name"></p>
-        <div>
-            <a href="https://github.com/SiriusKoan" class="link" target="_blank" id="github"><img
-                    src="https://cdn0.iconfinder.com/data/icons/octicons/1024/mark-github-512.png"></a>
-            <a href="https://telegram.me/SiriusKoan" class="link" target="_blank" id="telegram"><img
-                    src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/335_Telegram_logo-512.png"></a>
-        </div>
+
     </main>
     <footer>
         <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>

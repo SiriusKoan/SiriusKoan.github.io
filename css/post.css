@@ -37,7 +37,8 @@ main {
 
 .post_content h2 a::before {
     content: "# ";
-    color: rgb(56, 135, 161);;
+    color: rgb(56, 135, 161);
+    ;
 }
 
 .post_content h2 a:hover {

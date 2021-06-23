@@ -49,28 +49,6 @@ main {
     bottom: 0;
 }
 
-.link {
-    width: 35px;
-    margin: 10px 8px 10px 8px;
-    display: inline-block;
-    opacity: 0;
-    transition: opacity 1s ease-in;
-    animation-name: fadeIn;
-    animation-delay: 3s;
-    /* wait for avatar showing up and typing effect */
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
-
-.link:hover {
-    filter: opacity(50%);
-    transform: scale(1.1);
-}
-
-.link img {
-    width: 100%;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;

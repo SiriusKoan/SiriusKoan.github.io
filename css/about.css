@@ -1,0 +1,63 @@
+body {
+    background-color: #343535;
+    margin: 0px;
+}
+
+h1 {
+    color: white;
+    font-family: 'Dancing Script', cursive;
+}
+
+.link {
+    width: 35px;
+    margin: 10px 8px 10px 8px;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.link:hover {
+    filter: opacity(60%);
+    transform: scale(1.1);
+}
+
+.link img {
+    width: 100%;
+}
+
+.ripple {
+    border-radius: 50%;
+    border: 1px solid #ffffff59;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in;
+}
+
+#copyright {
+    position: absolute;
+    bottom: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes ripple-effect {
+    from {
+        transform: scale(0.25);
+    }
+    to {
+        transform: scale(10);
+        opacity: 0.01;
+    }
+}
