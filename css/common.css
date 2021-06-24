@@ -1,5 +1,6 @@
 header {
     margin: 30px auto 30px 20px;
+    user-select: none
 }
 
 .header-content {
@@ -14,6 +15,27 @@ header {
     filter: opacity(50%);
 }
 
+#avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    transition: 0.3s ease-in;
+}
+
+#avatar img {
+    width: 200px;
+    border-radius: 28%;
+    transition: 0.3s ease-in;
+}
+
+#avatar img:hover {
+    filter: saturate(105%);
+    transform: scale(1.05);
+}
+
 #copyright {
     margin-top: 100px;
     margin-bottom: 20px;
@@ -23,6 +45,7 @@ header {
     transition: opacity 1s ease-in;
     font-family: 'Alata', sans-serif;
     font-size: 15px;
+    user-select: none
 }
 
 #copyright a {

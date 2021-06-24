@@ -2,6 +2,7 @@ body {
     background-image: radial-gradient(circle, #848484, #848484, #4e4e4e, #343535, #1d1e1e);
     background-size: cover;
     margin: 0px;
+    user-select: none
 }
 
 main {
@@ -10,27 +11,6 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#avatar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    animation-name: fadeIn;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
-    transition: 0.3s ease-in;
-}
-
-#avatar img {
-    width: 200px;
-    border-radius: 28%;
-    transition: 0.3s ease-in;
-}
-
-#avatar img:hover {
-    filter: saturate(105%);
-    transform: scale(1.05);
 }
 
 #typing-name {

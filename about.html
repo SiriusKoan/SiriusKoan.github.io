@@ -14,20 +14,33 @@
     <title>About Me</title>
 </head>
 
-<body style="min-height: 100vh;">
+<body>
     <header>
         <nav>
             <a href="/" class="header-content">SiriusKoan</a>
             <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
         </nav>
     </header>
     <main>
         <h1>SiriusKoan</h1>
-        <div>
-            <a href="https://github.com/SiriusKoan" class="link" target="_blank" id="github"><img
-                    src="https://cdn0.iconfinder.com/data/icons/octicons/1024/mark-github-512.png"></a>
-            <a href="https://telegram.me/SiriusKoan" class="link" target="_blank" id="telegram"><img
-                    src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/335_Telegram_logo-512.png"></a>
+        <div class="info">
+            <h2>Contact Me</h2>
+            <div>
+                <a href="https://github.com/SiriusKoan" target="_blank"><img
+                        src="https://cdn0.iconfinder.com/data/icons/octicons/1024/mark-github-512.png" alt="github"></a>
+                <span class="description">GitHub</span>
+            </div>
+            <div>
+                <a href="https://telegram.me/SiriusKoan" target="_blank"><img
+                        src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/335_Telegram_logo-512.png"
+                        alt="telegram"></a>
+                <span class="description">Telegram</span>
+            </div>
+            <div><a><img src="https://cdn4.iconfinder.com/data/icons/logo-brand/512/gmail_google_mail_email-256.png"
+                        alt="email"></a>
+                <span class="description" id="email" title="Click to copy">k.peihsun@gmail.com</span>
+            </div>
         </div>
     </main>
     <footer>
@@ -44,6 +57,16 @@
             ripple.style.top = `${y}px`;
             ripple.style.animationName = "ripple-effect";
             ripple.onanimationend = () => document.body.removeChild(ripple);
+        }
+
+        var email = document.getElementById("email");
+        email.onclick = function () {
+            var textArea = document.createElement("textarea");
+            textArea.value = email.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
         }
     </script>
 </body>
