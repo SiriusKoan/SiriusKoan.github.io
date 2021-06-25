@@ -30,6 +30,7 @@
         <a href="#setup.py">setup.py</a>
         <a href="#寫套件">寫套件</a>
         <a href="#上傳至PyPI">上傳至 PyPI</a>
+        <a href="#使用GitHub_actions自動化">使用 GitHub actions 自動化</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -47,7 +48,10 @@
         <div class="post_content" id="Setup">
             <h2><a href="#Setup">Setup</a></h2>
             <p>
-                首先，我們要安裝一些必要的套件，使用我們的好朋友 <code>pip</code> 來幫忙: <code>pip install twine setuptools</code>。
+                首先，我們要安裝一些必要的套件，使用我們的好朋友 <code>pip</code> 來幫忙。
+            </p>
+            <p>
+                <script src="https://gist.github.com/SiriusKoan/86648f135d71a6a0c263344a70e65cae.js"></script>
             </p>
             <p>
                 第一個 <code>twine</code> 是最後上傳到 PyPI 會用到的工具，而第二個 <code>setuptools</code> 則是隨後要寫 <code>setup.py</code>
@@ -94,14 +98,14 @@
                     PyPI 的網站看到。
                 </li>
                 <li>
-                    <code>install_requires</code> 包括了這個套件所需的其他第三方套件，如 <code>requests</code>、<code>numpy</code>
+                    <code>install_requires</code> 包括了這個套件所需的其他第三方套件，如 requests、numpy
                     等等。如果要指定版本的話要使用 <code>extras_require</code>，使用可以參考 <a
                         href="https://github.com/eternnoir/pyTelegramBotAPI/blob/master/setup.py">GitHub
                         pyTelegramBotAPI/setup.py</a>。如果對 python 版本有需求的話，可以使用 <code>python_requires</code>。
                 </li>
                 <li>
-                    <code>classifiers</code> 是一些資訊，官方稱之為
-                    <code>A list of strings describing the categories for the package</code>，也會顯示在 PyPI 的頁面上。
+                    <code>classifiers</code> 是一些資訊，官方稱之為 "A list of strings describing the categories for the
+                    package"，也會顯示在 PyPI 的頁面上。我自己在上面放了一些 python 的版本資訊。
                 </li>
             </ul>
             <p>如果需要更詳細的說明或更多欄位的用途，可以參考官方 <a
@@ -112,8 +116,6 @@
             </p>
             <div class="post_content" id="寫套件">
                 <h2><a href="#寫套件">寫套件</a></h2>
-                <!-- <p>以下是完成之後的檔案結構。</p>
-                <p><img src="static/directory.png" alt="directory" width="300px"></p> -->
                 <p>結束 <code>setup.py</code> 之後，我們可以開始寫套件了。</p>
                 <p>
                     我們要先建立一個跟套件名稱同名的目錄，在這裡我們使用 <code>mypackage</code> 來舉例。接下來要在裡面建立 <code>__init__.py</code>，這表示他是一個
@@ -122,12 +124,34 @@
                 </p>
                 <p>
                     在寫完後，我們就可以開始使用這個套件了，可以試試 <code>pip install .</code>，理論上應該會跑出一大串訊息然後告訴你成功安裝了套件
-                    <code>mypackage</code>。這時候打開 python interpreter，然後 <code>import mypackage</code>，應該就可以看到他順利引入，而你也可以開始使用你自己的套件。
+                    <code>mypackage</code>。這時候打開 python interpreter，然後
+                    <code>import mypackage</code>，應該就可以看到他順利引入，而你也可以開始使用你自己的套件。
                 </p>
             </div>
         </div>
         <div class="post_content" id="上傳至PyPI">
             <h2><a href="#上傳至PyPI">上傳至 PyPI</a></h2>
+            <p>自己用過之後，就可以發佈到 PyPI 給全世界的人下載，這時候就需要用到一開始安裝的 <code>twine</code> 了。</p>
+            <p>但在上傳之前，我們必須要先有一個套件的壓縮檔，所以我們需要讓 python 幫我們處理一下。</p>
+            <p>
+                <script src="https://gist.github.com/SiriusKoan/07a286e12c2f51d41feb2610504aa1e2.js"></script>
+            </p>
+            <p>第一行是用來確定 <code>setup.py</code> 裡面的資訊填寫的足夠充分，也可以不使用；而第二行就是上述的做一個套件壓縮檔。到這步結束後，檔案結構應該會如下圖所示。</p>
+            <p><img src="static/directory.png" alt="directory" width="300px"></p>
+            <p>在上傳之前，我們還必須有一個 PyPI 的帳號，可以用 <code>twine</code> 來建立，但我選擇用網站的方式。基本上沒有什麼特別的，但 Username 建議要跟
+                <code>setup.py</code> 裡面的 author 一樣，不然可能之後會出事。註冊完後，就來到最後一步。
+            </p>
+            <p>
+                <script src="https://gist.github.com/SiriusKoan/473ea49875a2d1b407617d8e6d4f370a.js"></script>
+            </p>
+            <p>下完這個指令後，他會要求你登入，接著就會開始上傳。結束之後就可以回到剛剛註冊的頁面，理論上就可以看到套件已經妥當的在 PyPI 給大家下載了。</p>
+            <p>而 PyPI 也有提供一些 badge 可以嵌在 README 裡面，這邊是一些常見的例子，可以多多利用讓 README 看起來不單調。</p>
+            <p>
+                <script src="https://gist.github.com/SiriusKoan/a2fd0db5e404ee50384f696a89f63b72.js"></script>
+            </p>
+        </div>
+        <div class="post_content" id="使用GitHub_actions自動化">
+            <h2><a href="#使用GitHub_actions自動化">使用 GitHub actions 自動化</a></h2>
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
@@ -138,9 +162,19 @@
                 to make it pip-installable</a>
             <a href="https://betterscientificsoftware.github.io/python-for-hpc/tutorials/python-pypi-packaging/">Python:
                 Creating a pip installable package</a>
+            <a href="https://towardsdatascience.com/how-to-package-your-python-code-df5a7739ab2e">How to Package Your
+                Python Code</a>
             <a href="https://github.com/eternnoir/pyTelegramBotAPI/blob/master/setup.py">GitHub
                 pyTelegramBotAPI/setup.py</a>
-            <a href="https://github.com/hsuan1117/CodeforcesAPI">CodeforcesAPI</a>
+            <a href="https://github.com/hsuan1117/CodeforcesAPI">GitHub CodeforcesAPI</a>
+            <a
+                href="https://medium.com/starbugs/%E5%AF%A6%E4%BD%9C%E9%96%8B%E6%BA%90%E5%B0%8F%E5%B7%A5%E5%85%B7-%E8%88%87-github-actions-%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-3dd2d70eeb">實作開源小工具，與
+                Github Actions 的第一次相遇！</a>
+            <a
+                href="https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/">Publishing
+                package distribution releases using GitHub Actions CI/CD workflows</a>
+            <a href="https://docs.github.com/en/actions/guides/building-and-testing-python">Building and testing Python
+            </a>
         </div>
     </main>
     <footer>
