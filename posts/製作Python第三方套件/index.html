@@ -27,9 +27,9 @@
     <div id="toc">
         <a href="#前情提要">前情提要</a>
         <a href="#Setup">Setup</a>
-        <a href="#套件結構">套件結構</a>
-        <a href="#上傳至 PyPI">上傳至 PyPI</a>
-        <a href="#更新套件版本">更新套件版本</a>
+        <a href="#setup.py">setup.py</a>
+        <a href="#寫套件">寫套件</a>
+        <a href="#上傳至PyPI">上傳至 PyPI</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -47,20 +47,15 @@
         <div class="post_content" id="Setup">
             <h2><a href="#Setup">Setup</a></h2>
             <p>
-                首先，我們要安裝一些必要的套件。
-            </p>
-            <p>
-                <script src="https://gist.github.com/SiriusKoan/86648f135d71a6a0c263344a70e65cae.js"></script>
+                首先，我們要安裝一些必要的套件，使用我們的好朋友 <code>pip</code> 來幫忙: <code>pip install twine setuptools</code>。
             </p>
             <p>
                 第一個 <code>twine</code> 是最後上傳到 PyPI 會用到的工具，而第二個 <code>setuptools</code> 則是隨後要寫 <code>setup.py</code>
                 會用到的套件，會讓寫 <code>setup.py</code> 的過程輕鬆很多。
             </p>
         </div>
-        <div class="post_content" id="套件結構">
-            <h2><a href="#套件結構">套件結構</a></h2>
-            <p>以下是完成之後的檔案結構。</p>
-            <p><img src="static/directory.png" alt="directory" width="300px"></p>
+        <div class="post_content" id="setup.py">
+            <h2><a href="#setup.py">setup.py</a></h2>
             <p>
                 首先我們必須先寫 <code>setup.py</code>，它裡面包含了整個套件所需的資訊。以下是一個簡單的範例。
             </p>
@@ -84,8 +79,7 @@
                 </li>
                 <li>
                     <code>packages</code> 是這個套件裡面要包含的package，在上面的範例我用 <code>setuptools</code> 提供的
-                    <code>find_packages</code> 來自動尋找，也可以加上
-                    <code>exclude</code>
+                    <code>find_packages</code> 來自動尋找，也可以加上 <code>exclude</code>
                     的選項來去掉不該被包進去的 package，像是 <code>tests</code>、<code>docs</code> 等等，也可以直接指定，像是使用
                     <code>packages=["mypackage"]</code>。
                 </li>
@@ -114,15 +108,39 @@
                     href="https://setuptools.readthedocs.io/en/latest/references/keywords.html">Keywords</a>。而這些資料除了可以直接寫在
                 <code>setup.py</code>，也可以寫在 <code>setup.cfg</code>，但我這邊就不提這個方式，有需要的話可以參考 <a
                     href="https://setuptools.readthedocs.io/en/latest/userguide/quickstart.html">setuptools:
-                    Quickstart</a> 的轉換。</p>
+                    Quickstart</a> 的轉換。
+            </p>
+            <div class="post_content" id="寫套件">
+                <h2><a href="#寫套件">寫套件</a></h2>
+                <!-- <p>以下是完成之後的檔案結構。</p>
+                <p><img src="static/directory.png" alt="directory" width="300px"></p> -->
+                <p>結束 <code>setup.py</code> 之後，我們可以開始寫套件了。</p>
+                <p>
+                    我們要先建立一個跟套件名稱同名的目錄，在這裡我們使用 <code>mypackage</code> 來舉例。接下來要在裡面建立 <code>__init__.py</code>，這表示他是一個
+                    package。然後就可以開始寫套件內容，但要注意的是，在建立一些 <code>class</code> 或是 <code>function</code> 之後，需要把他們全部
+                    <code>import</code> 進 <code>__init__.py</code>。
+                </p>
+                <p>
+                    在寫完後，我們就可以開始使用這個套件了，可以試試 <code>pip install .</code>，理論上應該會跑出一大串訊息然後告訴你成功安裝了套件
+                    <code>mypackage</code>。這時候打開 python interpreter，然後 <code>import mypackage</code>，應該就可以看到他順利引入，而你也可以開始使用你自己的套件。
+                </p>
+            </div>
+        </div>
+        <div class="post_content" id="上傳至PyPI">
+            <h2><a href="#上傳至PyPI">上傳至 PyPI</a></h2>
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
             <a href="https://zwindr.blogspot.com/2018/03/python-package.html">[Python] 如何打包成 Package</a>
             <a href="https://docs.python.org/3/distutils/setupscript.html">Writing the Setup Script</a>
-            <a href="https://setuptools.readthedocs.io/en/latest/userguide/quickstart.html">setuptools Quickstart</a>
+            <a href="https://setuptools.readthedocs.io/en/latest/index.html">setuptools Documentation</a>
             <a href="https://marthall.github.io/blog/how-to-package-a-python-app/">How to package a python application
                 to make it pip-installable</a>
+            <a href="https://betterscientificsoftware.github.io/python-for-hpc/tutorials/python-pypi-packaging/">Python:
+                Creating a pip installable package</a>
+            <a href="https://github.com/eternnoir/pyTelegramBotAPI/blob/master/setup.py">GitHub
+                pyTelegramBotAPI/setup.py</a>
+            <a href="https://github.com/hsuan1117/CodeforcesAPI">CodeforcesAPI</a>
         </div>
     </main>
     <footer>
