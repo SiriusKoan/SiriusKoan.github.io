@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>製作 Python 第三方套件</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前情提要">前情提要</a>
+        <a href="#Setup">Setup</a>
+        <a href="#套件結構">套件結構</a>
+        <a href="#上傳至 PyPI">上傳至 PyPI</a>
+        <a href="#更新套件版本">更新套件版本</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">製作 Python 第三方套件</a></h1>
+        <div class="post_content" id="前情提要">
+            <h2><a href="#前情提要">前情提要</a></h2>
+            <p>
+                前陣子在滑 GitHub 的時候看到有朋友寫了個 python 的套件，所以就覺得自己也可以來試試看，於是就花了一些時間寫出了 <a
+                    href="https://github.com/SiriusKoan/RandomUsers">RandomUsers</a> 這個套件。
+            </p>
+            <p>
+                自己其實覺得這個套件沒有太大用途，但既然剛好有個機會嘗試新事物，何樂而不為。所以這篇文章就是一些經驗，給別人看的同時也留給自己當筆記。
+            </p>
+        </div>
+        <div class="post_content" id="Setup">
+            <h2><a href="#Setup">Setup</a></h2>
+            <p>
+                首先，我們要安裝一些必要的套件。
+            </p>
+            <p>
+                <script src="https://gist.github.com/SiriusKoan/86648f135d71a6a0c263344a70e65cae.js"></script>
+            </p>
+            <p>
+                第一個 <code>twine</code> 是最後上傳到 PyPI 會用到的工具，而第二個 <code>setuptools</code> 則是隨後要寫 <code>setup.py</code>
+                會用到的套件，會讓寫 <code>setup.py</code> 的過程輕鬆很多。
+            </p>
+        </div>
+        <div class="post_content" id="套件結構">
+            <h2><a href="#套件結構">套件結構</a></h2>
+            <p>以下是完成之後的檔案結構。</p>
+            <p><img src="static/directory.png" alt="directory" width="300px"></p>
+            <p>
+                首先我們必須先寫 <code>setup.py</code>，它裡面包含了整個套件所需的資訊。以下是一個簡單的範例。
+            </p>
+            <p>
+                <script src="https://gist.github.com/SiriusKoan/ecbbc0371627e716cb00b093d26201d1.js"></script>
+            </p>
+            <p>
+                雖然有很多欄位，但其實都不是必需的，只是 build 完會變出一些 <code>UNKWONE</code> 之類的名字，所以正常來說還是要填。
+            </p>
+            <p>
+                基本上 <code>name</code>、<code>version</code>、<code>packages</code> 是比較重要的欄位，其他的欄位就比較可選擇不填，下面我們分項說明。
+            </p>
+            <ul>
+                <li>
+                    <code>name</code> 是指這個 package 的名字，就是別人要安裝套件時要打的。
+                </li>
+                <li>
+                    <code>version</code> 顧名思義就是版本，可以參考 <a href="https://www.python.org/dev/peps/pep-0440/">PEP 440 --
+                        Version Identification and Dependency
+                        Specification</a> 的規則，這邊我直接使用 <code>x.x</code> 來命名。
+                </li>
+                <li>
+                    <code>packages</code> 是這個套件裡面要包含的package，在上面的範例我用 <code>setuptools</code> 提供的
+                    <code>find_packages</code> 來自動尋找，也可以加上
+                    <code>exclude</code>
+                    的選項來去掉不該被包進去的 package，像是 <code>tests</code>、<code>docs</code> 等等，也可以直接指定，像是使用
+                    <code>packages=["mypackage"]</code>。
+                </li>
+                <li>
+                    <code>description</code> 是對於這個套件的簡短描述，會在 PyPI 看到他。而 <code>long_description</code> 會出現在 PyPI 網站的
+                    Project description 部分，我直接拿會顯示在 GitHub 的 <code>README.md</code> 來用。也因為是直接拿它來用，所以要記得設定
+                    <code>long_description_content_type</code>，不然他會以純文字顯示。
+                </li>
+                <li>
+                    <code>author</code> 和 <code>author_email</code> 是自己本人的資訊，<code>url</code> 是這個專案的網址，我選擇放 GitHub
+                    repo，畢竟也沒有其他可放，也因為放 GitHub repo，所以 PyPI 有顯示 GitHub statistics。<code>license</code> 可以選擇自己喜歡的。上述幾項都會在
+                    PyPI 的網站看到。
+                </li>
+                <li>
+                    <code>install_requires</code> 包括了這個套件所需的其他第三方套件，如 <code>requests</code>、<code>numpy</code>
+                    等等。如果要指定版本的話要使用 <code>extras_require</code>，使用可以參考 <a
+                        href="https://github.com/eternnoir/pyTelegramBotAPI/blob/master/setup.py">GitHub
+                        pyTelegramBotAPI/setup.py</a>。如果對 python 版本有需求的話，可以使用 <code>python_requires</code>。
+                </li>
+                <li>
+                    <code>classifiers</code> 是一些資訊，官方稱之為
+                    <code>A list of strings describing the categories for the package</code>，也會顯示在 PyPI 的頁面上。
+                </li>
+            </ul>
+            <p>如果需要更詳細的說明或更多欄位的用途，可以參考官方 <a
+                    href="https://setuptools.readthedocs.io/en/latest/references/keywords.html">Keywords</a>。而這些資料除了可以直接寫在
+                <code>setup.py</code>，也可以寫在 <code>setup.cfg</code>，但我這邊就不提這個方式，有需要的話可以參考 <a
+                    href="https://setuptools.readthedocs.io/en/latest/userguide/quickstart.html">setuptools:
+                    Quickstart</a> 的轉換。</p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+            <a href="https://zwindr.blogspot.com/2018/03/python-package.html">[Python] 如何打包成 Package</a>
+            <a href="https://docs.python.org/3/distutils/setupscript.html">Writing the Setup Script</a>
+            <a href="https://setuptools.readthedocs.io/en/latest/userguide/quickstart.html">setuptools Quickstart</a>
+            <a href="https://marthall.github.io/blog/how-to-package-a-python-app/">How to package a python application
+                to make it pip-installable</a>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>

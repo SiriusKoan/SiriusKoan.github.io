@@ -12,7 +12,11 @@ main {
 
 h1 {
     color: white;
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Alata', sans-serif;
+}
+
+h2 {
+    font-weight: normal;
 }
 
 .ripple {
@@ -27,6 +31,7 @@ h1 {
 }
 
 .info {
+    margin-left: 10px;
     font-family: 'Alata', sans-serif;
     color: white;
     display: flex;
@@ -95,5 +100,11 @@ h1 {
     ro {
         opacity: 1;
         transform: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        margin-left: 20px;
     }
 }
