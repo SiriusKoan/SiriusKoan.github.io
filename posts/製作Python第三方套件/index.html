@@ -30,7 +30,7 @@
         <a href="#setup.py">setup.py</a>
         <a href="#寫套件">寫套件</a>
         <a href="#上傳至PyPI">上傳至 PyPI</a>
-        <a href="#使用GitHub_actions自動化">使用 GitHub actions 自動化</a>
+        <a href="#使用GitHub_Actions自動化">使用 GitHub Actions 自動化</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -137,7 +137,7 @@
                 <script src="https://gist.github.com/SiriusKoan/07a286e12c2f51d41feb2610504aa1e2.js"></script>
             </p>
             <p>第一行是用來確定 <code>setup.py</code> 裡面的資訊填寫的足夠充分，也可以不使用；而第二行就是上述的做一個套件壓縮檔。到這步結束後，檔案結構應該會如下圖所示。</p>
-            <p><img src="static/directory.png" alt="directory" width="300px"></p>
+            <img src="static/directory.png" alt="directory" width="300px">
             <p>在上傳之前，我們還必須有一個 PyPI 的帳號，可以用 <code>twine</code> 來建立，但我選擇用網站的方式。基本上沒有什麼特別的，但 Username 建議要跟
                 <code>setup.py</code> 裡面的 author 一樣，不然可能之後會出事。註冊完後，就來到最後一步。
             </p>
@@ -145,13 +145,39 @@
                 <script src="https://gist.github.com/SiriusKoan/473ea49875a2d1b407617d8e6d4f370a.js"></script>
             </p>
             <p>下完這個指令後，他會要求你登入，接著就會開始上傳。結束之後就可以回到剛剛註冊的頁面，理論上就可以看到套件已經妥當的在 PyPI 給大家下載了。</p>
+            <p>之後如果需要更新套件的話，就只要再重複一次上面三個指令即可，但可能會遇到 <code>HTTPError: 400 Client Error: File already exists.</code>，他是因為
+                PyPI 不允許重複使用檔名，所以這種狀況通常是因為忘了改版本號。如果改過還是不行的話可以試試先把 <code>dist</code> 刪除再重新下指令。</p>
             <p>而 PyPI 也有提供一些 badge 可以嵌在 README 裡面，這邊是一些常見的例子，可以多多利用讓 README 看起來不單調。</p>
             <p>
                 <script src="https://gist.github.com/SiriusKoan/a2fd0db5e404ee50384f696a89f63b72.js"></script>
             </p>
         </div>
-        <div class="post_content" id="使用GitHub_actions自動化">
-            <h2><a href="#使用GitHub_actions自動化">使用 GitHub actions 自動化</a></h2>
+        <div class="post_content" id="使用GitHub_Actions自動化">
+            <h2><a href="#使用GitHub_Actions自動化">使用 GitHub Actions 自動化</a></h2>
+            <p>前面我們手動把套件上傳到 PyPI，在這章我們把這個步驟交給 GitHub Actions 來完成。我們需要先到 repo 底下的 Actions 頁面，應該會看到如下圖的介面。</p>
+            <img src="static/github-actions.png" alt="github-actions" style="width: 700px;">
+            <p>選擇第一個 Publish Python Package，然後應該就會進到編輯設定檔的頁面，檔名不限，它會自動掃。基本上這時候那個設定檔就會指示 GitHub Actions 把套件上傳到 PyPI
+                了，但我們可以做一點微幅的更動。但在開始之前，我們必須先來看看他的 components。
+            </p>
+            <ul>
+                <li><code>workflow</code> 是一個 precedure，基本上現在在編輯的設定檔就是一個 workflow。</li>
+                <li><code>job</code> 是一個大步驟的概念，由許多 <code>step</code> 組成，如果要做依賴 (如先經過測試才能 deploy 之類的)要在這層處理，不然會自動平行執行。
+                </li>
+                <li><code>step</code> 是步驟，由 job 依序執行。</li>
+                <li><code>action</code> 在 GitHub Actions 是最小的單位，一個 <code>step</code> 可以包含數個 <code>action</code>。</li>
+            </ul>
+            <p>
+                另外，在最上面還有 <code>name</code> 及 <code>on</code>，前者的用途是命名這個 workflow，而後者是指定在甚麼時候觸發他，我選擇在每次 push 的時候都觸發，這樣每次
+                push 他就會幫我自動更新 PyPI 上的套件。更改完後應該會類似 <a
+                    href="https://github.com/SiriusKoan/RandomUsers/blob/main/.github/workflows/python-publish.yml">RandomUsers
+                    GitHub Actions</a>。
+            </p>
+            <p>
+                最後還需要在 repo 的設定裡面的 secrets 裡面加入 <code>PYPI_API_TOKEN</code>，這樣 GitHub Actions 才能通過身分認證。而這個 API token 可以在
+                PyPI 的 Account Setting 生成。
+            </p>
+            <p>做完以上後，就可以把下一個新版本 push 到 GitHub，然後看看是否有成功觸發 GitHub Actions 並更新到 PyPI，有可能會遇到一些語法錯誤，畢竟每個 CI/CD
+                工具的設定檔都有自己的語法。</p>
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
@@ -164,6 +190,9 @@
                 Creating a pip installable package</a>
             <a href="https://towardsdatascience.com/how-to-package-your-python-code-df5a7739ab2e">How to Package Your
                 Python Code</a>
+            <a
+                href="https://stackoverflow.com/questions/52016336/how-to-upload-new-versions-of-project-to-pypi-with-twine">How
+                to upload new versions of project to PyPI with twine?</a>
             <a href="https://github.com/eternnoir/pyTelegramBotAPI/blob/master/setup.py">GitHub
                 pyTelegramBotAPI/setup.py</a>
             <a href="https://github.com/hsuan1117/CodeforcesAPI">GitHub CodeforcesAPI</a>
@@ -173,6 +202,9 @@
             <a
                 href="https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/">Publishing
                 package distribution releases using GitHub Actions CI/CD workflows</a>
+            <a href="https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions">Introduction
+                to GitHub Actions
+            </a>
             <a href="https://docs.github.com/en/actions/guides/building-and-testing-python">Building and testing Python
             </a>
         </div>

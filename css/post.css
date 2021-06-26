@@ -25,6 +25,7 @@ code {
 
 img {
     padding: 20px 0;
+    max-width: 700px;
 }
 
 .post_content {
@@ -195,6 +196,9 @@ img {
     main {
         margin-left: 50px;
         margin-right: 50px;
+    }
+    img {
+        max-width: 260px;
     }
     #toc {
         display: none;
