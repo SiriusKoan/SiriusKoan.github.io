@@ -2,7 +2,7 @@ body {
     background-image: radial-gradient(circle, #848484, #848484, #4e4e4e, #343535, #1d1e1e);
     background-size: cover;
     margin: 0px;
-    user-select: none
+    user-select: none;
 }
 
 main {
