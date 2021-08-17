@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 基本工具及套件</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#總覽">總覽</a>
+        <a href="#virtualenv">virtualenv</a>
+        <a href="#flask">flask</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 2 基本工具及套件</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                今天我會說明一些開始實作所需要的工具，包含 flask 套件。但單單一個 flask 並不足以完成這個專案 (除非自己手刻一堆東西)，所以在未來我們會撰寫
+                <code>requirements.txt</code> 來新增更多套件。
+            </p>
+            <p>如昨天所說，我們不會特別著墨在 flask 以外的內容，所以基本上安裝過程都只是帶過。</p>
+        </div>
+        <div class="post_content" id="總覽">
+            <h2><a href="#總覽">總覽</a></h2>
+            <p>
+                做專案需要配備的東西如下：
+            </p>
+            <ul>
+                <li>Python</li>
+                <li>virtualenv</li>
+                <li>編輯器</li>
+                <li>flask</li>
+                <li>database brower</li>
+            </ul>
+            <p>
+                Python 和編輯器在這裡不多加贅述，而 database brower 則是選擇性的，方便 debug 使用，因為開發過程中我會使用 sqlite，所以我下載
+                <a href="https://sqlitebrowser.org/">DB Browser for SQLite</a> 來使用。
+            </p>
+            <p>
+                而我自己使用的是 Windows + python 3.9 + vscode + windows powershell，所以後面的操作會以此配置為主。
+            </p>
+        </div>
+        <div class="post_content" id="virtualenv">
+            <h2><a href="#virtualenv">virtualenv</a></h2>
+            <p>
+                virtualenv 是一個建立虛擬環境的工具，可以幫助開發者模擬實際上線的環境。
+            </p>
+            <p>
+                首先我們需要 <code>pip install virtualenv</code> 來安裝 virtualenv 套件，安裝完成之後可以先用 vscode 開啟一個資料夾，並在裡面使用指令
+                <code>virtualenv .venv</code>，如此一來他就會建立一個名為 <code>.venv</code> 的虛擬環境資料夾。
+            </p>
+            <p>
+                但此時我們還沒有進入虛擬環境，要進入必須要使用 <code>.venv\Scripts\activate.ps1</code> (for powershell)，沒意外的話應該可以看到命令列前端出現了
+                <code>(venv)</code>，這樣就代表你已經成功進入虛擬環境了，現在和外部裝了什麼套件一點關係都沒有。
+            </p>
+            <p>這邊並沒有著墨太多，如果需要更深入資訊的話可以參考<a href="https://ithelp.ithome.com.tw/articles/10199980">此篇</a>。</p>
+        </div>
+        <div class="post_content" id="flask">
+            <h2><a href="#flask">flask</a></h2>
+            <p>
+                接下來就到了重頭戲 flask，他也是一個 python 套件，所以我們使用 <code>pip install flask</code> 來安裝，讓他跑一下之後就會結束。
+            </p>
+            <p>
+                這時可以嘗試開啟 python interpreter 來確定是否有確實安裝，但要記得必須在虛擬環境中打開，輸入
+                <code>import flask</code>，如果沒有錯誤的話就代表成功了。
+            </p>
+        </div>
+        <div class="post_content" id="結語">
+            <h2><a href="結語">結語</a></h2>
+            <p>
+                今天把該安裝的套件及軟體處理掉，明天就會正式進入寫 flask 的部分了~
+            </p>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
