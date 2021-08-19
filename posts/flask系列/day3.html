@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 2 基本工具及套件</title>
+    <title>Day 3 基本 flask 函式</title>
     <link rel="icon" href="/img/me.jpg">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
@@ -27,6 +27,8 @@
     <div id="toc">
         <a href="#前言">前言</a>
         <a href="#簡單的範例">簡單的範例</a>
+        <a href="#另一個範例">另一個範例</a>
+        <a href="#References">References</a>
     </div>
     <main>
         <h1 id="title"><a href="#">Day 3 基本 flask 函式</a></h1>
@@ -39,7 +41,7 @@
         <div class="post_content" id="簡單的範例">
             <h2><a href="#簡單的範例">簡單的範例</a></h2>
             <p>
-                我們先從一個簡單的範例來看起。
+                我們先從一個簡單的範例來看起。請注意如果要實作的話檔名務必使用 <code>app.py</code>，後面會解釋。
             </p>
             <script src="https://gist.github.com/SiriusKoan/c32fbc689ec5c6096c002126580ad6b1.js"></script>
             <p>
@@ -50,14 +52,75 @@
             <ul>
                 <li>第一行我們引入 flask。</li>
                 <li>第三行定義一個變數 <code>app</code> 作為這個 flask application 的實體。</li>
-                <li>第五行使用裝飾器註冊一個路徑 <code>/</code>，<code>methods</code> 是一個 list，裡面是這個路徑所允許的 HTTP method，這邊我用 GET 和 POST
-                    為例。</li>
+                <li>第五行使用裝飾器註冊一個路徑 <code>/</code>，這邊要注意的是 flask 要求每個路徑都要用 <code>/</code> 開頭，如
+                    <code>/meow</code>、<code>/user</code> 等等，<code>meow</code> 是不被允許的，會跳出
+                    <code>ValueError: urls must start with a leading slash</code>。<code>methods</code> 是一個
+                    list，裡面是這個路徑所允許的 HTTP method，這邊我用 GET
+                    和 POST
+                    為例。如果對裝飾器不熟悉可以閱讀<a
+                        href="https://medium.com/citycoddee/python%E9%80%B2%E9%9A%8E%E6%8A%80%E5%B7%A7-3-%E7%A5%9E%E5%A5%87%E5%8F%88%E7%BE%8E%E5%A5%BD%E7%9A%84-decorator-%E5%97%B7%E5%97%9A-6559edc87bc0">此篇</a>，在此處我不多加解釋其功用。
+                </li>
                 <li>第六行開始定義一個函式來處理通向 <code>/</code> 的 request，這個函式名稱隨意，但未來會用到。</li>
                 <li>第七行回傳一個字串 <code>Index Page</code>，也就是剛剛在瀏覽器看到的東西。它的目的就是回傳 HTML 或是 response (後面會提到)，未來還會加入更多複雜的方式來
                     render 網頁。</li>
                 <li>第九行使用 <code>app.run()</code> 讓他跑，並用 <code>host</code>、<code>port</code> 來指定要跑在哪裡，如果是在有公開 IP
-                    的伺服器上可以直接把 <code>host</code> 設為該 IP。</li>
+                    的伺服器上可以直接把 <code>host</code> 設為該 IP。但未來基本上不會使用此方法，所以不會介紹太多。</li>
             </ul>
+            <p>
+                要把這個網站跑起來還有第二個方法，可以在命令列輸入 <code>flask run</code>，這個指令是跟著 <code>pip install flask</code>
+                一起安裝的。
+            </p>
+            <p>
+                但要注意的是，使用這個指令會自動把程式碼裡面的 <code>app.run()</code> 忽略，也就是說，他會自動忽略上面的 <code>host</code> 和
+                <code>port</code>，在未指定的情況下，預設 <code>host=127.0.0.1</code>、<code>port=5000</code>。如果要指定的話，需要傳入參數，如
+                <code>flask run --host 127.0.0.1 --port 8080</code>，這樣會達到和上面相同的效果。
+            </p>
+            <p>
+                此外，理論上我們需要設定 <code>FLASK_APP</code> 這個環境變數，它的作用是告訴 flask 你的 flask application 在哪裡。當沒有設定的時候，他會自動去尋找
+                <code>app.py</code>、<code>wsgi.py</code> 或是裡面有 <code>create_app</code>、<code>make_app</code> 函式的模組
+                (後面會提到)。也就是說，如果這時候檔名不是 <code>app.py</code>，他剛剛就不會順利執行了。
+            </p>
+            <p>
+                最後還有一個要注意的點，在執行的時候 (兩種方法都是)
+                畫面應該會跑出一行紅字：<code>WARNING: This is a development server. Do not use it in a production deployment.</code>，這表示這個執行方法並不適合用於
+                production。但我們現在只是用於開發，所以可以設定 <code>FLASK_ENV=DEVELOPMENT</code> 這個環境變數，來告訴 flask
+                現在使用的環境為開發環境。在更改為開發環境的同時，flask 會打開一些 debug 相關的功能：
+            </p>
+            <ul>
+                <li>debugger，讓你在程式碼錯誤的時候直接在網頁上顯示 error traceback，而非黑底白字的 <code>500 Internal Server Error</code>。</li>
+                <li>debug console，可以在瀏覽器上輸入 <code>127.0.0.1:8080/console</code>，flask 有一個內建的 interactive debugger
+                    可以讓你跟系統互動。</li>
+                <li>reloader，在修改 flask 有關的檔案時，flask 會自動重啟並套用剛剛的更動，可以免去一直重開的麻煩。</li>
+            </ul>
+        </div>
+        <div class="post_content" id="另一個範例">
+            <h2><a href="#另一個範例">另一個範例</a></h2>
+            <p>稍微修改一下剛剛的程式碼，加入一些新東西。</p>
+            <script src="https://gist.github.com/SiriusKoan/2e2ccdd688ef456aa3b2865447361a50.js"></script>
+            <p>
+                在這個範例裡，我們新增了第二個路徑 <code>/dynamic/&lt;int:id&gt;</code>，前面的 <code>/dynamic</code> 跟上面的 <code>/</code>
+                是接近的，新的東西在後面的 <code>/&lt;int:id&gt;</code>。
+            </p>
+            <p>
+                他是 flask 提供的「動態路徑」功能，冒號前面的 <code>int</code> 表示他的型別，後面的 <code>id</code> 則是變數名稱，而這個變數需要在下方處理 request
+                的函式中作為一個參數。這時候存取 <code>/dynamic/1</code>，flask 就會傳回 <code>1</code>，但如果存取
+                <code>/dynamic/meow</code>，那就會傳回 <code>404 Not Found</code>，因為 <code>meow</code> 並非一個整數，並沒有符合這條路徑規則。
+            </p>
+            <p>我們也可以把規則寫成 <code>/dynamic/@&lt;int:id&gt;</code>，這樣一來，存取 <code>/dynamic/@1</code> 就會傳回 <code>1</code>。
+            </p>
+            <p>值得一提的是，如果在回傳的時候沒有先把 <code>id</code> 轉型成 <code>str</code>，那 flask
+                會有錯誤：<code>TypeError: The view function did not return a valid response. The return type must be a string, dict, tuple, Response instance, or WSGI callable, but it was a int.</code>，這表示你回傳的不是正確的型別，合法的型別只有
+                <code>str</code>、<code>Response</code> (未來會提到) 等等，其餘可以參考附錄一。
+            </p>
+        </div>
+        <div class="post_content" id="結語">
+            <h2><a href="#結語">結語</a></h2>
+            <p>今天看了兩個簡單的 flask 範例，基本上這樣就足以建出一個簡單的小網站，但未來我們還會繼續探討其他函式。</p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+            <a href="https://www.yanxurui.cc/posts/python/2017-07-27-return-value-of-view-function/#a-wsgi-app">Flask: return value of view function</a>
+            <a href="https://flask.palletsprojects.com/en/2.0.x/cli/">Command Line Interface</a>
         </div>
     </main>
     <footer>
