@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 基本 flask 函式 (1)</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#範例一">範例一</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 4 基本 flask 函式 (1)</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                昨天提到了一些 flask 的例子，而今天會繼續深入討論他提供的一些函式，可以讓寫出來的網頁有更多的變化。
+            </p>
+        </div>
+        <div class="post_content" id="範例一">
+            <h2><a href="#範例一">範例一</a></h2>
+            <p>
+                首先我們來看個例子，這個網頁裏面包含了數個路徑，我們一一來檢視。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/933aa18581b9570333edc21b6a36e779.js"></script>
+            <ul>
+                <li>第一個路徑跟昨天的一樣，就是首頁。</li>
+                <li>
+                    第二個路徑會幫我們重新導向 (redirect) 至 google，他使用了 <code>redirect</code> 這個函式，而我們需要先從 flask import
+                    他。再來要注意的是，並不是單單 <code>redirect(url)</code> 就可以了，前面必須要加上 <code>return</code>。
+                </li>
+                <li>
+                    第三個路徑一樣會幫我們重新導向至 google，但他的方法是先重新導向到第二個路徑，再由他重新導向至 google。其中用到了 <code>url_for</code> 這個函式，一樣要先
+                    import。在 <code>url_for()</code> 填的參數是要導向的函式名稱，請注意是函式名稱
+                    (字串)，而非函式本身，也不是該路徑，如果要看完整對應表的話可以使用
+                    <code>app.url_map</code>。他會找出該函式對應到的路徑，以此處為例，<code>url_for("redirect_to_google")</code> 會回傳
+                    <code>"/google"</code>，然後就會變成 <code>return redirect("/google")</code>，然後就會導向到剛剛的第二個路徑。
+                </li>
+                <li>
+                    最後一個路徑會直接回傳 <code>403 Forbidden</code>。這裡使用的是 <code>abort</code> 函式，一樣需要先 import。他很直接，就是會直接回傳指定的
+                    指定的 HTTP status code，但必須要是一個錯誤的 code (<code>404</code>、<code>418</code>、<code>500</code> 等等)。這裡要注意的是，他不需要 <code>return</code>，但他跟
+                    <code>return</code> 一樣，都會直接把後面的程式忽略。有了這個函式，我們可以更輕鬆的處理錯誤。
+                </li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
