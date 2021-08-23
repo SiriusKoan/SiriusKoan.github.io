@@ -81,7 +81,7 @@
             <p>
                 我們這次傳入了 <code>state</code> 這個變數，然後在 jinja 裡面判斷他是否等於 <code>running</code>。這裡要注意的是他 if
                 並不是跟剛剛一樣用兩個大括號，而是一個大括號和一個百分符號。這兩種的差別在於他是不是一個 statement，<code>{% %}</code> 是給 statement 用的，而
-                <code>{{ }}</code> 則是用來存取內容用的。還有跟 python 不太一樣的是他有 <code>endif</code>，要記得加。
+                <code>{{ }}</code> 則是用來存取內容用的。還有跟 python 不太一樣的是他有 <code>endif</code>，要記得加。也因為他已經有了 <code>endif</code>，所以他不會管你的縮排。
             </p>
             <p>
                 還有一個要注意的是，我們的 <code>&lt;p&gt;running&lt;/p&gt;</code> 和 <code>&lt;p&gt;terminated&lt;/p&gt;</code>
