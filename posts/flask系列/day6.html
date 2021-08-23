@@ -27,8 +27,8 @@
     <div id="toc">
         <a href="#前言">前言</a>
         <a href="#前置作業">前置作業</a>
-        <a href="範例一">範例一</a>
-        <a href="範例二">範例二</a>
+        <a href="#範例一">範例一</a>
+        <a href="#範例二">範例二</a>
         <a href="#範例三">範例三</a>
         <a href="#References">References</a>
     </div>
@@ -81,7 +81,8 @@
             <p>
                 我們這次傳入了 <code>state</code> 這個變數，然後在 jinja 裡面判斷他是否等於 <code>running</code>。這裡要注意的是他 if
                 並不是跟剛剛一樣用兩個大括號，而是一個大括號和一個百分符號。這兩種的差別在於他是不是一個 statement，<code>{% %}</code> 是給 statement 用的，而
-                <code>{{ }}</code> 則是用來存取內容用的。還有跟 python 不太一樣的是他有 <code>endif</code>，要記得加。也因為他已經有了 <code>endif</code>，所以他不會管你的縮排。
+                <code>{{ }}</code> 則是用來存取內容用的。還有跟 python 不太一樣的是他有 <code>endif</code>，要記得加。也因為他已經有了
+                <code>endif</code>，所以他不會管你的縮排。
             </p>
             <p>
                 還有一個要注意的是，我們的 <code>&lt;p&gt;running&lt;/p&gt;</code> 和 <code>&lt;p&gt;terminated&lt;/p&gt;</code>
@@ -107,11 +108,22 @@
                 <code>{{ user.upper() }}</code> 就好，但是有些時候沒有辦法用 python 的語法來處理，像是如果我們直接使用 <code>int()</code>，他會告訴我們
                 undefined，這時候就需要用 <code>| int</code> 來達成需求。
             </p>
+            <p>
+                如果想要加入自定義的 filter 的話，flask 已經有一個包裝好的方法可以處理，以下是範例。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/d4c7765df225a0fc4f579fd4d7e386c2.js"></script>
+            <p>
+                可以看到在 <code>app.py</code> 的最前面我們使用了 <code>app.template_filter</code>，讓他裝飾了一個會丟出第一個字母的函式，接下來在
+                <code>index.html</code> 我們就直接使用了這個 filter，不需要把它當成參數放在 <code>render_template</code>，也不需要特別
+                import，他就直接變成了預設就存在的 filter。
+            </p>
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
             <a href="https://docs.exponea.com/docs/jinja-syntax">Basic Syntax of Jinja</a>
             <a href="https://hackmd.io/@shaoeChen/SJ0X-PnkG?type=view">Python jinja2 + flask</a>
+            <a href="https://michaelcho.me/article/custom-jinja-template-filters-in-flask">Custom Jinja template filters
+                in Flask</a>
         </div>
     </main>
     <footer>
