@@ -27,15 +27,15 @@
     <div id="toc">
         <a href="#前言">前言</a>
         <a href="#範例">範例</a>
-        <a href="#References">References</a>
+        <a href="#實作">實作</a>
     </div>
     <main>
         <h1 id="title"><a href="#">Day 8 jinja (3)</a></h1>
         <div class="post_content" id="前言">
             <h2><a href="#前言">前言</a></h2>
             <p>
-                今天一樣是 jinja 的內容，會講到模板的繼承。這個在網頁有固定排版或是格式的時候很好用，不用一直重複複製貼上。就算網頁沒有固定排版，基本上 <code>head</code>
-                也都是一樣的，所以也可以只繼承 <code>head</code> 的部分。簡單來說，我覺得這是一個一定會用到的功能，後面開始寫專案的時候也會用到。
+                今天一樣是 jinja 的內容，會講到模板的繼承。這個在網頁有固定排版或是格式的時候很好用，不用一直重複複製貼上。就算網頁沒有固定排版，基本上 <code>head</code>、要引入的 CSS、JS
+                也可能有重複。簡單來說，我覺得這是一個一定會用到的功能，後面開始寫專案的時候也會用到。
             </p>
         </div>
         <div class="post_content" id="範例">
@@ -59,8 +59,23 @@
                 塞進去。這樣就完成了樣板的繼承，這時候打開瀏覽器應該可以看到它顯示出 <code>nav</code>、剛剛傳入的 <code>user</code>、<code>footer</code>。
             </p>
         </div>
-        <div class="post_content attachment" id="References">
-            <h2><a href="#References">References</a></h2>
+        <div class="post_content" id="實作">
+            <h2><a href="#實作">實作</a></h2>
+            <p>
+                最後我們來實作未來要用到的 <code>base.html</code>。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/115b43cf5b7c92651056b9a90b993e7b.js"></script>
+            <p>
+                這裡多數都是跟剛剛差不多的內容，比較特別的是我多放了一個 <code>extra_import</code>，在這裡可以放一些 CSS、JS
+                等等的，而他們要放在哪裡則是明天的主題。
+            </p>
+            <p>
+                在 <code>nav</code> 的部分我放了很多連結，同時也幫他們上了註解，很明顯我們不可能對所有人都顯示出一樣的 <code>nav</code>，所以在未來我們會在這裡做一些判斷來決定到底要怎麼顯示
+                <code>nav</code>。
+            </p>
+            <p>
+                有了這個模板之後，我們未來所有的 HTML 都會繼承自他，可以大幅減少重複的內容。
+            </p>
         </div>
     </main>
     <footer>
