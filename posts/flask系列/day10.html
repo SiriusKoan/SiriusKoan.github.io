@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 10 實作基本檔案</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#config.py">config.py</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 10 實作基本檔案</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                今天我們會實作 <code>config.py</code> 和 <code>requirements.txt</code>，並稍微介紹一下這些套件大概要幹嘛。我們把兩個分開來慢慢看。
+            </p>
+            <p>
+                在開始之前，我們要先講一下環境變數。很多資訊我們不會直接放在 <code>config.py</code> 裡面，而是要從環境變數去抓，這樣我們才不會把敏感的資訊 (如密碼、token 等等)
+                直接暴露在原始碼中。設置環境變數因作業系統而異，可以參考 <a
+                    href="https://docs.microsoft.com/zh-tw/windows-server/administration/windows-commands/set_1">Windows
+                    cmd</a>、<a
+                    href="https://www.tutorialspoint.com/how-to-set-environment-variables-using-powershell">Windows
+                    PowerShell</a>、<a
+                    href="https://www.serverlab.ca/tutorials/linux/administration-linux/how-to-set-environment-variables-in-linux/">linux</a>，在此處不贅述。而我們要在
+                python 中抓到環境變數則需要使用 <code>os.getenv</code> 這個函式，在後面的範例我們會直接
+                <code>from os import getenv</code>，所以全部都會使用 <code>getenv</code> 來呈現，有關其用法可以參考
+                <a href="https://www.geeksforgeeks.org/python-os-getenv-method/">Python | os.getenv() method</a>。
+            </p>
+        </div>
+        <div class="post_content" id="config.py">
+            <h2><a href="#config.py">config.py</a></h2>
+            <p>
+                再來要看的是 <code>config.py</code>，他會放在 <code>app/</code> 裡面，而我們也有一些是三個共通的設定，所以他們三個都會繼承自
+                <code>Config</code> 這個物件，現在就來看看它長甚麼樣子。請注意前面需要 <code>from os import getenv</code>。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/7d6ef4368773046dc72877d6378bc2ae.js"></script>
+            <p>
+                它分成 <code>flask-mail</code> 和 <code>flask-sqlalchemy</code> 兩個部分，我們兩個分開講。
+            </p>
+            <ul>
+                <li>
+                    如剛剛所說，<code>flask-mail</code> 是用來處理寄信的套件，所以他當然需要知道怎麼寄信。我們會使用 gmail 來寄信，所以
+                    <code>MAIL_USERNAME</code>、<code>MAIL_PASSWORD</code> 都是 gmail 的資訊。這樣填完之後基本上來無法寄信，需要到
+                    <a href="https://myaccount.google.com/security">Google Account Security</a> 裡面把「低安全性應用程式存取權」打開 (可參考
+                    <a href="https://ken00535.medium.com/send-gmail-with-python-7aaa822695d6">Send Gmail with
+                        Python</a>)，這樣才能夠寄信。順帶一提，我自己不建議用這個方式寄信，會這樣搞是因為想做一次 flask-mail 給大家看，平常沒有需求就算了，或是也可以試試看用自己的郵件伺服器。
+                </li>
+                <li>
+                    第二個是有關 <code>flask-sqlalchemy</code> 的設定，非常簡單只有短短一行。這個設定其實無傷大雅，他是一個讓你可以開關事件系統 (event system)
+                    的設定，基本上來說我們不需要他，但如果不關掉的話，他會在每次打開的時候送你警告，非常煩而且礙眼，所以關掉。此外，如果開著的話他會占用額外的記憶體資源，為了減少主機負擔，就把他關了吧。
+                </li>
+            </ul>
+            <p>
+                接下來我們來看看三個環境分別的設定。在這裡我們需要用到 <code>os.urandom</code> 這個函式來生成之前提過的 <code>SECRET_KEY</code>，同樣地，我們使用
+                <code>from os import urandom</code> 來引入。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/113d6d02adfbfee4b084e7b26524f5e5.js"></script>
+            <p>
+                我們以一個一個設定的名稱來解釋，前面一樣有註解來表示他是關於甚麼套件的設定。
+            </p>
+            <ul>
+                <li>
+                    <code>ENV</code> 很明顯就是代表環境。有些其他的環境變數也可能會被影響，像是馬上要講到的 <code>DEBUG</code>。
+                </li>
+                <li>
+                    <code>DEBUG</code> 是指示 flask 要不要開起 debug 工具用的，這些工具之前有提過了。如果 <code>ENV=development</code>，那
+                    <code>DEBUG</code> 會自動設為 <code>True</code>
+                </li>
+                <li>
+                    <code>SECRET_KEY</code> 之前也提過，是用來處理一些登入、session 相關的事情用的。理論上我們會用 <code>urandom</code> 來生成 (如
+                    production)，但因為他如果改變的話會讓舊的 session 都失效，開發的時候要一直重新登入很煩，所以就讓它靜態。
+                </li>
+                <li>
+                    <code>TESTING</code> 會讓 flask 開啟一些測試用的功能，而且有些套件的功能可能會改變，像是 flask-mail 在 <code>TESTING=True</code>
+                    的時候就不會真的寄信出去，而是會打在 console。
+                </li>
+                <li>
+                    <code>SQLALCHEMY_DATABASE_URI</code> 是用來指定資料庫位置的設定，像我們開發的時候用
+                    sqlite，就把檔案放在同一個目錄；測試的時候資料量不大，就把它放在記憶體就好；真正上線的時候就看環境要給甚麼，如果換一個資料庫的話就會把前面的 <code>sqlite:</code>
+                    改掉。要特別注意一下他有三個 <code>/</code>，而放在記憶體的話前後有冒號。
+                </li>
+                <li>
+                    前面有提到 flask-wtf 可以處理 CSRF 的攻擊，他用的就是 <code>csrf_token</code>，而 <code>WTF_CSRF_ENABLED</code>
+                    就是用來設定要不要打開 <code>csrf_token</code> 的設定。因為在測試的時候，我們不會像正常在使用一樣實際按下送出，而是直接傳資料到後端，所以就會被
+                    <code>csrf_token</code> 擋下來。因為如此，我們在測試的時候會把它關掉，讓測試順利一點，反正測試不會攻擊我們。
+                </li>
+            </ul>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+            <a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/">flask-sqlalchemy Configuration</a>
+            <a href="https://github.com/twtrubiks/Flask-Mail-example">Flask-Mail-example</a>
+            <a href="https://hackmd.io/@shaoeChen/BytvGKs4M?type=view">Flask實作_ext_09_Flask-Mail_郵件發送</a>
+            <a
+                href="https://stackoverflow.com/questions/33738467/how-do-i-know-if-i-can-disable-sqlalchemy-track-modifications">How
+                do I know if I can disable SQLALCHEMY_TRACK_MODIFICATIONS?</a>
+            <a
+                href="https://stackoverflow.com/questions/41249045/sqlalchemy-how-to-use-events-listens-for-in-flask-sqlalchemy-sqlalchemy">SQLALCHEMY:
+                how to use @events.listens_for in flask_sqlalchemy-SQLalchemy</a>
+            <a href="https://pythonhosted.org/Flask-Mail/#configuring-flask-mail">Configuring Flask-Mail</a>
+            <a href="https://flask.palletsprojects.com/en/2.0.x/config/#builtin-configuration-values">Flask Builtin
+                Configuration Values</a>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
