@@ -26,6 +26,7 @@
     <a id="top-button" href="#"><span>TOP</span></a>
     <div id="toc">
         <a href="#前言">前言</a>
+        <a href="#requirements.txt">requirements.txt</a>
         <a href="#config.py">config.py</a>
         <a href="#References">References</a>
     </div>
@@ -49,6 +50,36 @@
                 <a href="https://www.geeksforgeeks.org/python-os-getenv-method/">Python | os.getenv() method</a>。
             </p>
         </div>
+        <div class="post_content" id="requirements.txt">
+            <h2><a href="#requirements.txt">requirements.txt</a></h2>
+            <p>
+                直接來看看我們有那些需要的套件，我們會一項一項分開介紹。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/4000b14c33c9cd3117d63e1c26440197.js"></script>
+            <p>第一個是 flask，這就不必再提了。</p>
+            <ul>
+                <li>
+                    <code>Flask-SQLAlchemy</code> 是一個資料庫的 ORM 框架，它的好處是不用擔心 SQL injection，然後也會比較好寫，因為就是用 python
+                    的風格在寫的。此外，他支援多種資料庫，所以我們只需要寫一次程式碼就可以給多種資料庫使用。但相對的，因為要透過一層 python 的轉換，效能上必定有差。
+                </li>
+                <li>
+                    之前在說 flask 的 <code>request</code> 的時候有提到一個東西叫做 <code>request.form</code>，但我們沒有深入去了解，就是因為我們使用了
+                    <code>Flask-WTF</code>。他可以用物件的方式來建立我們需要的表單，而且也支援很多驗證，像是正規表示式 (regex)、長度、是否為空等等，如果需要用 reCAPTCHA
+                    也可以用他。此外，他也可以防止 CSRF (利用 <code>csrf_token</code>)，是一個安全而且方便的表單工具。
+                </li>
+                <li>
+                    <code>Flask-Login</code> 套件如其名，就是負責處理使用者驗證的套件，後面會非常大幅的提到他。
+                </li>
+                <li>
+                    <code>Flask-Migrate</code> 是用來管理資料庫版本的，當我們資料庫的結構有變動的時候，就可以讓他幫忙自動更新，減少人為的錯誤。他需要配合
+                    <code>Flask-SQLAlchemy</code>。
+                </li>
+                <li>
+                    <code>Flask-Mail</code> 一樣套件如其名，就是用來處理寄信的套件，在下面的設定檔會有更多細節。這個套件我覺得可選，不加入並不會導致整個 application
+                    無法運作，我把他加入專案的原因只是想展現一次這個套件的功能。
+                </li>
+            </ul>
+        </div>
         <div class="post_content" id="config.py">
             <h2><a href="#config.py">config.py</a></h2>
             <p>
@@ -57,18 +88,18 @@
             </p>
             <script src="https://gist.github.com/SiriusKoan/7d6ef4368773046dc72877d6378bc2ae.js"></script>
             <p>
-                它分成 <code>flask-mail</code> 和 <code>flask-sqlalchemy</code> 兩個部分，我們兩個分開講。
+                它分成 <code>Flask-Mail</code> 和 <code>Flask-SQLAlchemy</code> 兩個部分，我們兩個分開講。
             </p>
             <ul>
                 <li>
-                    如剛剛所說，<code>flask-mail</code> 是用來處理寄信的套件，所以他當然需要知道怎麼寄信。我們會使用 gmail 來寄信，所以
+                    如剛剛所說，<code>Flask-Mail</code> 是用來處理寄信的套件，所以他當然需要知道怎麼寄信。我們會使用 gmail 來寄信，所以
                     <code>MAIL_USERNAME</code>、<code>MAIL_PASSWORD</code> 都是 gmail 的資訊。這樣填完之後基本上來無法寄信，需要到
                     <a href="https://myaccount.google.com/security">Google Account Security</a> 裡面把「低安全性應用程式存取權」打開 (可參考
                     <a href="https://ken00535.medium.com/send-gmail-with-python-7aaa822695d6">Send Gmail with
-                        Python</a>)，這樣才能夠寄信。順帶一提，我自己不建議用這個方式寄信，會這樣搞是因為想做一次 flask-mail 給大家看，平常沒有需求就算了，或是也可以試試看用自己的郵件伺服器。
+                        Python</a>)，這樣才能夠寄信。如果不想用 gmail 也可以用其他郵件伺服器，但就需要去翻一下他的文件了。
                 </li>
                 <li>
-                    第二個是有關 <code>flask-sqlalchemy</code> 的設定，非常簡單只有短短一行。這個設定其實無傷大雅，他是一個讓你可以開關事件系統 (event system)
+                    第二個是有關 <code>Flask-SQLAlchemy</code> 的設定，非常簡單只有短短一行。這個設定其實無傷大雅，他是一個讓你可以開關事件系統 (event system)
                     的設定，基本上來說我們不需要他，但如果不關掉的話，他會在每次打開的時候送你警告，非常煩而且礙眼，所以關掉。此外，如果開著的話他會占用額外的記憶體資源，為了減少主機負擔，就把他關了吧。
                 </li>
             </ul>
@@ -93,7 +124,7 @@
                     production)，但因為他如果改變的話會讓舊的 session 都失效，開發的時候要一直重新登入很煩，所以就讓它靜態。
                 </li>
                 <li>
-                    <code>TESTING</code> 會讓 flask 開啟一些測試用的功能，而且有些套件的功能可能會改變，像是 flask-mail 在 <code>TESTING=True</code>
+                    <code>TESTING</code> 會讓 flask 開啟一些測試用的功能，而且有些套件的功能可能會改變，像是 Flask-Mail 在 <code>TESTING=True</code>
                     的時候就不會真的寄信出去，而是會打在 console。
                 </li>
                 <li>
@@ -110,7 +141,10 @@
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
-            <a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/">flask-sqlalchemy Configuration</a>
+            <a href="http://blog.twbryce.com/what-is-orm/">ORM 介紹及 ORM 優點、缺點</a>
+            <a href="https://www.prisma.io/dataguide/types/relational/what-are-database-migrations">What are database
+                migrations?</a>
+            <a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/">Flask-SQLAlchemy Configuration</a>
             <a href="https://github.com/twtrubiks/Flask-Mail-example">Flask-Mail-example</a>
             <a href="https://hackmd.io/@shaoeChen/BytvGKs4M?type=view">Flask實作_ext_09_Flask-Mail_郵件發送</a>
             <a
