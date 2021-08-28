@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 12 實作資料庫</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#資料庫結構">資料庫結構</a>
+        <a href="#relationship">relationship</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 12 實作資料庫</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                今天會實作資料庫的結構。我們總共需要實作三個 table 的 scheme，分別是 <code>users</code>、<code>posts</code>、<code>comments</code>。
+            </p>
+            <p>
+                等等會提到一些資料庫的概念，我不會細講，因為要真的細講的話大概需要好幾天的文章，此處我們先知道怎麼用就好。在這篇文章的最後我會補充一下一些用法。
+            </p>
+        </div>
+        <div class="post_content" id="資料庫結構">
+            <h2><a href="#資料庫結構">資料庫結構</a></h2>
+            <p>
+                我們需要把這些 model 都放在昨天提到的 <code>app/database/models.py</code> 裡面。我們一個一個來看，先從 <code>users</code>
+                開始。先不要管最前面的引入，我們晚點再看。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/31c509241cced08c9d5b2caf90b509e7.js"></script>
+            <p>
+                我們宣告了一個叫做 <code>Users</code> 的物件，而他是繼承自 <code>db.Model</code>，這個 <code>db</code>
+                就是昨天用到的那個。我們在這裡面放了很多變數，除了 <code>__tablename__</code> 之外 (很明顯他就代表這個 table 的名字)，每一個變數都是一個資料庫的
+                column，一樣一個一個分開來看。
+            </p>
+            <ul>
+                <li>
+                    <code>id</code> 是這個 table 的主鍵 (primary key)，如同他後面的參數 <code>primary_key=True</code> 所示。在他前面有一個
+                    <code>db.Integer</code>，他表示了這個 column 的資料庫型別。有了前面這兩個參數，<code>autoincrement</code> (自動把
+                    <code>id</code> 流水號) 就會自動存在。
+                </li>
+                <li>
+                    <code>username</code> 是用來存使用者名稱的，他使用的資料庫型別是 <code>db.String</code>，此外，他還加上 <code>unique</code> 和
+                    <code>nullable</code> 兩個參數，分別代表是否唯一及可否為空，那在此處當然是要唯一並不可為空，畢竟是使用者名稱，不這樣做也有點奇怪。
+                </li>
+                <li>
+                    <code>password</code> 是存密碼用的，當然，我們存的不是明文，而是 hash 過的結果，這個部分會在等等看到。他使用的一樣是
+                    <code>db.String</code>，而他也不能為空，但可以重複 (不設定就沒有限制)。
+                </li>
+                <li>
+                    <code>email</code> 是電子郵件信箱，基本上我們會在註冊的時候發一封信給註冊者，然後就再也不會用到了，這就是 <code>Flask-Mail</code>
+                    在這系列唯一的戲份。沒什麼好懷疑地，他是字串，然後不能重複，也不能為空。
+                </li>
+                <li>
+                    <code>introduction</code>
+                    是存使用者的自我介紹用的，畢竟我們的主題是部落格系統，讓作者可以自我介紹應該十分合理。這邊就不做限制，可以為空也可以跟別人一樣，雖然在正常情況下要跟別人一樣還蠻不容易的。
+                </li>
+                <li>
+                    <code>is_admin</code> 是用來說明此使用者是不是管理員的，所以他使用的是 <code>db.Boolean</code>，也就是 <code>True</code> 或是
+                    <code>False</code>，他不能為空，然後當然可以重複，最後他有一個 <code>default=False</code>，這代表沒有設定的時候他就會自動當他是
+                    <code>False</code>。
+                </li>
+                <li>
+                    <code>register_time</code> 是用來存註冊時間。他使用的是 <code>db.Datetime</code> 這個資料庫型別，這個型別是用來對付
+                    python 的 <code>datetime.datetime</code>，所以我們後面的 <code>default</code> 是
+                    <code>datetime.datetime.now</code>。如果要用 <code>datetime.date</code> 的話，他搭配的資料型別是
+                    <code>db.Date</code>。這裡要特別注意他傳入的是 <code>datetime.datetime.now</code> 這個函式，而非
+                    <code>datetime.datetime.now()</code>。
+                </li>
+                <li>
+                    <code>posts</code> 和 <code>comments</code> 用到了 <code>db.relationship</code>，他分別是和在下兩個 table 裡面會看到的
+                    <code>posts.id</code> 和 <code>comments.id</code> 有關聯，簡單來說我們可以用他找到這個使用者底下全部的文章和留言。
+                </li>
+            </ul>
+            <p>
+                看完有哪些欄位後，來看看 <code>__init__</code> 這個函式。我們在新增一個使用者的時候，會先用這個 class 造出一個真實的使用者，然後再把造出來的使用者物件加入資料庫，所以我們需要這個
+                <code>__init__</code> 來做初始化，把傳入的值一個一個對應到 <code>self</code> 裡面。在這裡我把 <code>is_admin</code> 直接預設成
+                <code>False</code>，所以這樣上面的
+                <code>is_admin</code> 其實就不需要 <code>default=False</code> 了。這裡比較特別的是我們用的
+                <code>generate_password_hash</code> 這個函式，他當然是需要引入的，也就是在最前面的部分。他會把使用者輸入的明文密碼雜湊，然後存入資料庫，然後需要檢查的時候就用一起引入的
+                <code>check_password_hash</code> 來檢查，但這邊我用另外一個函式 <code>check_password</code> 來包裝一下，外面會用到的話就直接套用這個函式即可。
+            </p>
+            <p>
+                接下來就來看看剩下兩個。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/9a28d81e5d696010a581ad1680839bdd.js"></script>
+            <p>
+                我們分別說明他們兩個的各欄位用途，跟剛剛類似的會直接跳過，首先是 <code>posts</code>，他會儲存全部的文章資訊，包括標題、內容、作者等等。
+            </p>
+            <ul>
+                <li>
+                    <code>author_id</code> 是這篇文章的作者的使用者 ID (<code>users.id</code>)，他是把 <code>users.id</code> 當外鍵
+                    (foreign key)，然後讓 <code>users.posts</code> 可以存取到 <code>posts</code> 這個 table 的資料。而他當然不能為空
+                    (如果使用者遭到刪除，文章和留言也會跟著刪除)。
+                </li>
+                <li>
+                    <code>title</code> 是這篇文章的標題，不能為空，也不能重複。
+                </li>
+                <li>
+                    <code>description</code> 是這篇文章的小標，有沒有都沒差。
+                </li>
+                <li>
+                    <code>content</code> 是內文，當然不能為空。
+                </li>
+                <li>
+                    <code>comments</code> 又是一個 relationship，他和下面的 <code>comments</code> 有關連，所以可想而知，<code>comments</code>
+                    裡面一定也有一個跟這個 table 有關的外鍵。
+                </li>
+            </ul>
+            <p>
+                最後看到 <code>comments</code> 這個 table，他是用來儲存留言資訊的。
+            </p>
+            <ul>
+                <li>
+                    <code>author_id</code> 跟上面 <code>posts</code> 裡面的一樣，就是用 <code>users.id</code> 作為外鍵讓
+                    <code>users.comments</code> 可以存取這個 table。當然也不能為空。
+                </li>
+                <li>
+                    <code>post_id</code> 就是用到剛剛 <code>posts</code> 那個 table 的 relationship，讓 <code>posts.comments</code>
+                    可以存取到其下的留言。
+                </li>
+            </ul>
+        </div>
+        <div class="post_content" id="relationship">
+            <h2><a href="#relationship">relationship</a></h2>
+            <p>
+                在文章的最後，我們來看一下這個 relationship 會發生甚麼事。我們用剛剛的三個 table 舉例，但不會有範例程式碼。
+            </p>
+            <p>
+                假設現在有一個使用者叫做 <code>user1</code>，他是一個從資料庫撈出來的實體，也就是說我們可以存取
+                <code>user1.username</code>、<code>user1.email</code>，當然，我們也可以存取
+                <code>user1.posts</code>、<code>user1.comments</code>。
+            </p>
+            <p>
+                再假設他有兩篇文章，標題分別是 <code>article1</code>、<code>article2</code>，又有兩則留言，內容分別是
+                <code>comment1</code>、<code>comment2</code>。
+            </p>
+            <p>
+                這時候我們再回到 <code>user1</code>，他的 <code>user1.posts</code> 是一個長度為 2 的 list，內容是那兩個文章，我們可以使用
+                <code>user1.posts[0]</code> 來直接抓出第一篇文章的實體，所以我們就可以用這個實體來存取這篇文章的資料，<code>user1.posts[0].title</code> 就會是
+                <code>article1</code>，同樣地，<code>user1.comments[1].content</code> 就會是 <code>comment2</code>。
+            </p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+            <a
+                href="https://stackoverflow.com/questions/20848300/unable-to-create-autoincrementing-primary-key-with-flask-sqlalchemy">unable
+                to create autoincrementing primary key with flask-sqlalchemy</a>
+            <a href="https://docs.sqlalchemy.org/en/14/core/type_basics.html">Column and Data Types</a>
+            <a href="https://progressbar.tw/posts/267">外鍵 Foreign key (FK) 是什麼？</a>
+            <a href="https://ithelp.ithome.com.tw/articles/10229472">Day 32 資料庫正規化 (一 ~ 三)</a>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
