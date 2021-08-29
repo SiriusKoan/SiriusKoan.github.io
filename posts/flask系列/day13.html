@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 13 實作 manage.py</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#manage.py">manage.py</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 13 實作 manage.py</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                前天我們寫好了 <code>create_app</code>，但是還沒有人呼叫他，今天我們就要來呼叫他 (當然還不能用啦，因為藍圖都沒寫好)。
+            </p>
+            <p>
+                這個檔案叫做 <code>manage.py</code>，顧名思義，他就是用來管理的，我們可以用它來操作這個 application 及其附屬的資源，像是資料庫等等。而他是會用
+                <code>flask</code> 這個指令來操作 (跟 <code>flask run</code> 同一個)，我們預計會加入以下幾個指令：
+            </p>
+            <ul>
+                <li>
+                    <code>init_db</code> 會把資料庫初始化，但如果本來就存在他不會亂動。
+                </li>
+                <li>
+                    <code>reset_db</code> 會把資料庫整個砍掉再重建。
+                </li>
+                <li>
+                    <code>create_user</code> 會用來新增一個使用者，當然也可以透過設定 <code>is_admin=True</code> 來讓它變成管理員。
+                </li>
+            </ul>
+        </div>
+        <div class="post_content" id="manage.py">
+            <h2><a href="#manage.py">manage.py</a></h2>
+            <p>
+                事不宜遲，我們就開始吧。但在開始之前我們要先寫一下 <code>manage.py</code> 的基本架構。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/95c8a7f4d81933f1f5d08028afd45ba7.js"></script>
+            <p>
+                我們在最一開始引入了 <code>getenv</code>，這是之前很熟悉的函式了。接著還有 <code>create_app</code> 和
+                <code>db</code>，後者在今天不會用到，只是先引入留著，之後會用到。
+            </p>
+            <p>
+                接著我們用 <code>create_app</code> 造出了一個 <code>app</code>，使用的參數是環境變數 <code>FLASK_ENV</code>，所以自己要先設定好這個環境變數。
+            </p>
+            <p>
+                最後三行是 flask 提供的一個可以方便 debug 的小工具，他可以執行 flask 然後開一個 shell 讓你跟他互動，可以查現在 <code>app</code>
+                裡面有什麼內容之類的。使用的方式也很簡單，用
+                <code>flask shell</code> 這個指令即可，他就會開一個 shell 給你用。但這時候使用他會噴錯誤，我們等等還需要設定一個環境變數來處理。要使用這個 shell
+                是不需要這三行的，flask 本來就可以直接用，他們的用意是把現在的環境直接複製到 shell 裡面，讓 shell 可以看的資訊更多 (整個 <code>globals()</code>)，他這邊用到了
+                context 這個詞，如果深入鑽研的話會一直看到他，但在此處就先不提。可以試試看不加這三行，可以很明顯地發現如果不加然後在 shell 使用 <code>create_app</code> 會出現未定義。
+            </p>
+            <p>
+                這時候可能會想，我們根本沒有 <code>app.run()</code> 或是類似的函式，那他要怎麼執行？我們需要先設定 <code>FLASK_APP</code> 這個環境變數，它是用來告知 flask
+                我們的 <code>app</code> 在哪裡的。以此處為例，我們需要把它設為 <code>manage.py</code>，這樣 flask 就會知道我們的 <code>app</code> 就放在
+                <code>manage.py</code> 裡面，然後他就會自動自發地執行他。設定完成之後，<code>flask shell</code> 應該就可以使用了，可以嘗試看看。
+            </p>
+            <p>
+                但我們當然不是要執行 shell，我們需要讓他真的跑起來讓大家都可以用，所以我們就需要用之前用過的 <code>flask run</code> 來讓他跑起來，如同上面所述，它會自動去抓 <code>app</code> 然後讓他跑起來。
+            </p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
