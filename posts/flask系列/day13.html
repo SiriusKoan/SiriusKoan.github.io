@@ -27,6 +27,7 @@
     <div id="toc">
         <a href="#前言">前言</a>
         <a href="#manage.py">manage.py</a>
+        <a href="#自訂指令">自訂指令</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -55,7 +56,8 @@
         <div class="post_content" id="manage.py">
             <h2><a href="#manage.py">manage.py</a></h2>
             <p>
-                事不宜遲，我們就開始吧。但在開始之前我們要先寫一下 <code>manage.py</code> 的基本架構。
+                事不宜遲，我們就開始吧。但在開始之前我們要先寫一下 <code>manage.py</code> 的基本架構。後面我們會執行他，所以也會連帶執行到之前的
+                <code>create_app</code>，如果想看他正常執行的話，要先把那幾行藍圖的程式碼註解掉，不然會跑錯誤，畢竟我們根本沒定義過他們。
             </p>
             <script src="https://gist.github.com/SiriusKoan/95c8a7f4d81933f1f5d08028afd45ba7.js"></script>
             <p>
@@ -78,11 +80,59 @@
                 <code>manage.py</code> 裡面，然後他就會自動自發地執行他。設定完成之後，<code>flask shell</code> 應該就可以使用了，可以嘗試看看。
             </p>
             <p>
-                但我們當然不是要執行 shell，我們需要讓他真的跑起來讓大家都可以用，所以我們就需要用之前用過的 <code>flask run</code> 來讓他跑起來，如同上面所述，它會自動去抓 <code>app</code> 然後讓他跑起來。
+                但我們當然不是要執行 shell，我們需要讓他真的跑起來讓大家都可以用，所以我們就需要用之前用過的 <code>flask run</code> 來讓他跑起來，如同上面所述，它會自動去抓
+                <code>app</code> 然後讓他跑起來。
+            </p>
+        </div>
+        <div class="post_content" id="自訂指令">
+            <h2><a href="#自訂指令">自訂指令</a></h2>
+            <p>
+                因為這些新指令都是有關資料庫的，所以在加入新的指令到 <code>manage.py</code> 之前，我們必須先寫好資料庫端的函式，基本上就是不要讓 <code>db</code> 離開
+                <code>app/database</code>。我們需要先多開一個 <code>helper.py</code> 放在 <code>app/database</code>，然後加入一些函式給外部引入。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/56462e4f41d233753b32e86fa361adb6.js"></script>
+            <p>
+                這邊加入了三個函式，我們一個一個看。
+            </p>
+            <ul>
+                <li>
+                    <code>init</code> 是用來初始化資料庫的，我們使用 <code>create_all</code> 這個函式來幫忙，他會幫我們把資料庫的 table
+                    都建好，但如果已經存在的話，他不會把資料刪掉。
+                </li>
+                <li>
+                    <code>reset</code> 是用來把資料刪光光並重新建好資料庫的，我們使用 <code>drop_all</code> 和
+                    <code>create_all</code>，分別會把資料都刪光及建立資料庫，所以把他們兩個一起用就可以達到重設的目的了。
+                </li>
+                <li>
+                    <code>add_user</code> 是用來新增使用者的函式，要建立一個使用者很簡單，就只要用我們給的參數建立一個 <code>Users</code> 物件即可 (最前面引入了)，接下來我們用
+                    <code>try ... except ...</code> 來避免錯誤，沒錯誤就回傳 <code>True</code>，反之 <code>False</code>，當然可以做得更細緻
+                    (判斷使用者名稱是否重複等等)，但這邊就展示性質，不處理其他狀況。這邊我們使用 <code>db.session.add</code> 來把這個使用者加入到 session 裡面，接著再
+                    <code>db.session.commit</code> 把這個變化寫入資料庫。
+                </li>
+            </ul>
+            <p>
+                結束資料庫端的函式之後，我們可以看看 <code>manage.py</code> 要怎麼接。要記得最前面需要引入
+                <code>from app.database import init, reset, add_user</code>。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/5fd29b90c2e81dd460dfd785ba6334c2.js"></script>
+            <p>
+                這裡我們使用了 <code>app.cli.command</code> 這個裝飾器，flask 的這個部分是用 click 實作的，所以會有一些點跟他一樣，像是函式名稱是
+                <code>create_user</code> 但要呼叫的時候需要用 <code>create-user</code>，我自己是習慣把它改掉，使用 <code>name</code> 這個參數。
+            </p>
+            <p>
+                <code>init_db</code> 的部分基本上就是剛剛的 <code>init</code>，不管他。<code>reset</code>
+                也跟剛剛一樣，不管他。<code>create_user</code> 我們用 <code>input</code> 的方式讓人輸入資料，然後加入。這裡可以自己加入 email
+                的判斷、密碼長度是否過短之類的偵測，這邊就不大費周章了。
+            </p>
+            <p>
+                把他們加入完之後，就可以直接用 <code>flask</code> 來執行，我們可以先 <code>flask init_db</code> 讓他初始化資料庫，然後
+                <code>flask create_app</code> 新增一個使用者，沒有意外的話應該都可以跑得很順利。
             </p>
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
+            <a href="https://flask.palletsprojects.com/en/2.0.x/cli/">Command Line Interface</a>
+            <a href="https://docs.sqlalchemy.org/en/13/orm/session_basics.html">Session Basics</a>
         </div>
     </main>
     <footer>
