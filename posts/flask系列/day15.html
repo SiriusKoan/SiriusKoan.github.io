@@ -28,6 +28,7 @@
         <a href="#前言">前言</a>
         <a href="#前置作業">前置作業</a>
         <a href="#basic_test">basic_test</a>
+        <a href="#helper">helper</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -81,9 +82,35 @@
                     等等類似的函式。而他會回傳一個 response，我們可以來檢查他的回應有沒有符合預期。此處我們去看他的 <code>status_code</code> 是不是 200。
                 </li>
                 <li>
-                    在 <code>test_blueprint</code> 裡面，我們去檢查 <code>self.app.blueprints</code> 裡面有沒有該有的藍圖，他是 dict 型別，所以可以這樣去確認。
+                    在 <code>test_blueprint</code> 裡面，我們去檢查 <code>self.app.blueprints</code> 裡面有沒有該有的藍圖，他是 dict
+                    型別，所以可以這樣去確認。
                 </li>
             </ul>
+        </div>
+        <div class="post_content" id="helper">
+            <h2><a href="#helper">helper</a></h2>
+            <p>
+                因為測試很多函式的重複性很高，所以在開始寫 <code>main_bp</code> 的測試前，我們先來寫一下 <code>helper.py</code>，一樣要放在 <code>tests/</code>
+                裡面。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/8fca804353f8cfcb0b6ed4c5ac40275d.js"></script>
+            <p>
+                在這裡面我們定義了一個 <code>TestModel</code>，我們之後的測試都會換成繼承他，而非剛剛的
+                <code>unittest.TestCase</code>，也因為如此，接下來定義的函式都不是測試，而是給測試用的工具。在
+                <code>setUp</code> 還有 <code>tearDown</code> 跟剛剛做的事差不多，有差別的部份是我們新增了 <code>user_data</code> 和
+                <code>admin_data</code>，這在之後登入會用到。同時我們也用之前寫好的 <code>add_user</code> 來加入兩個測試用的使用者。還有我們也在
+                <code>tearDown</code> 加入了清除資料庫的動作。
+            </p>
+            <p>
+                接著我們定義了 <code>user_login</code> 和 <code>admin_login</code>，這邊就用到剛剛提到的 <code>post</code> 這個函式，然後他使用
+                <code>data</code> 參數把登入資料丟進去。再用 <code>login</code> 把上述兩者包裝起來給之後的函式用。
+            </p>
+            <p>
+                接下來我們自己定義了 <code>get</code> 和 <code>post</code>
+                兩個函式，讓它包含登入的功能，登入有很多種寫法，但有時候並沒有那麼直觀，可能會遇到明明登入了但後面發請求的時候又變成沒登入，這常常都是因為 context 不對。<code>post</code>
+                的部分跟剛剛一樣都使用 <code>data</code> 參數來把資料傳送給後端。我們還用到了一個叫做 <code>follow_redirects</code> 的參數，如果不讓他 follow 的話，那
+                <code>status_code</code> 就會變成 302，然後我們看到的資料也都是重新導向頁面的資料，而這通常不是我們樂見的 (除非我們只想確定他有重新導向)，因此在此處我們加上這個參數。
+            </p>
         </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
@@ -94,6 +121,8 @@
                 code that requires a Flask app or request context</a>
             <a href="https://testdriven.io/blog/flask-contexts/">Understanding the Application and Request Contexts in
                 Flask</a>
+            <a href="https://stackoverflow.com/questions/21506326/testing-flask-login-and-authentication">Testing Flask
+                login and authentication?</a>
         </div>
     </main>
     <footer>
