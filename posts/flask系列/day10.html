@@ -128,6 +128,9 @@
                     的時候就不會真的寄信出去，而是會打在 console。
                 </li>
                 <li>
+                    <code>SERVER_NAME</code> 在這裡是專門給測試用的，因為他跟平常使用的時候會有不一樣的狀態，所以會導致 <code>url_for</code> 無法使用。
+                </li>
+                <li>
                     <code>SQLALCHEMY_DATABASE_URI</code> 是用來指定資料庫位置的設定，像我們開發的時候用
                     sqlite，就把檔案放在同一個目錄；測試的時候資料量不大，就把它放在記憶體就好；真正上線的時候就看環境要給甚麼，如果換一個資料庫的話就會把前面的 <code>sqlite:</code>
                     改掉。要特別注意一下他有三個 <code>/</code>，而放在記憶體的話前後有冒號。
@@ -160,6 +163,8 @@
             <a href="https://pythonhosted.org/Flask-Mail/#configuring-flask-mail">Configuring Flask-Mail</a>
             <a href="https://flask.palletsprojects.com/en/2.0.x/config/#builtin-configuration-values">Flask Builtin
                 Configuration Values</a>
+            <a href="https://code.luasoftware.com/tutorials/flask/things-you-should-know-about-flask-server-name/">Things
+                You Should Know About Flask SERVER_NAME</a>
         </div>
     </main>
     <footer>
