@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 16 實作測試 (2)</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#test_main">test_main</a>
+        <a href="#test_user">test_user</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 16 實作測試 (2)</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                昨天我們寫好了測試的 model，今天就來用他實作吧。
+            </p>
+        </div>
+        <div class="post_content" id="test_main">
+            <h2><a href="#test_main">test_main</a></h2>
+            <p>
+                我們先從最簡單的 <code>main_bp</code> 開始。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/a79281ea530607f34f2fb38ab18040d6.js"></script>
+            <p>
+                他繼承了 <code>TestModel</code>，然後重寫了 <code>setUp</code>，用原先的 <code>setUp</code> 再加上一行指定
+                <code>self.route</code>，這樣昨天寫的 <code>get</code>、<code>post</code> 就都可以用了，而這個 <code>self.route</code> 是用
+                <code>url_for</code> 處理的。
+            </p>
+            <p>
+                後面我們用了兩個測試，一個是在沒登入的情況下抓這個頁面，另一個是在有登入的情況下。我們分別看他們有沒有回傳 200，然後後面我們再使用 <code>assertIn</code> 來確定
+                <code>"Login"</code> 和 <code>"Dashboard"</code> 有沒有在回傳的 HTML 裡面
+                (<code>res.data</code>)，我們會拿這個來當作判斷依據是因為到時候網頁的 navbar 會根據有沒有登入來決定要用怎麼樣子的，如果沒有登入當然就是顯示 login、register
+                等等，有登入的話就是 dashboard、寫文章之類的按鈕，這邊要注意的是，<code>res.data</code> 是一個 bytes
+                型別，所以我們前面用的 <code>assertIn</code> 也要跟著他用 bytes 型別。
+            </p>
+        </div>
+        <div class="post_content" id="test_user">
+            <h2><a href="#test_user">test_user</a></h2>
+            <p>
+                結束了 <code>main_bp</code> 的測試，我們來繼續看 <code>user_bp</code> 的。這裡就會有很多路徑，我們一個一個看，首先是登入頁面。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/6d0a8f5538ed6fb77719602809862763.js"></script>
+            <p>
+                。在 <code>setUp</code> 裡面，我們一樣先寫好這裡的 <code>self.route</code>，然後額外放了一個錯的帳號密碼。這邊要記得，我們在
+                <code>TestModel</code> 的 <code>setUp</code> 就有先生出兩個測試帳號，所以他們用一般的登入是可以的。
+            </p>
+            <p>
+                我們一樣先分別用沒登入和有登入的狀況去抓這個頁面，這個部分跟剛剛一樣。接下來輪到 <code>post</code>，我們先做一次 OK
+                的測試，就是拿正確的登入資料塞給他，那他應該要讓我們過，這是我們的期望，後面的 <code>assertIn</code> 是因為我們用
+                <code>follow_redirects</code>，所以登入後理論上會被重新導向到 dashboard 之類的地方，也就是說一定會有
+                navbar，所以用這個來判斷。再來是用錯誤的資料塞給網頁，那他應該要出現打錯密碼的訊息，也就是後面 <code>assertIn</code> 的內容。
+            </p>
+            <p>
+                接下來我們來看看註冊頁面的測試，
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/2a75fc8dfb9c5f369f8dc2b07e0cb6af.js"></script>
+            <p>
+                在 <code>setUp</code> 我們做了差不多的事情，這次我們準備了一份可以註冊的使用者資料跟一份密碼過短的，這個密碼過短的部分是 Flask-WTF 的工作，他會幫我們驗證。
+            </p>
+            <p>
+                一開始我們一樣看一下正常去抓網頁會不會有正常反應，當然加入登入和未登入兩個狀態。接下來我們先丟正確的資料給他，所以正常來說應該是註冊成功了，他應該會把我們導向到登入頁面之類的，但是還沒有登入，所以
+                navbar 上面還是會有 <code>Login</code>。而第二個則是密碼過短，Flask-WTF 會幫我們驗證到然後丟出錯誤，所以我們會收到這個訊息，然後 <code>flash</code>
+                出去，所以用 <code>assertIn</code> 來確定有沒有這個錯誤訊息，這個錯誤訊息是可以自訂的，也可以在
+                Flask-WTF 自己修改。
+            </p>
+            <p>
+                在 <code>user_bp</code> 當然不只有這兩個路徑，但我們就示範，不然太多也太重複了。
+            </p>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
