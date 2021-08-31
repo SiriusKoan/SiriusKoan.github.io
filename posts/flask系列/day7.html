@@ -63,7 +63,8 @@
                 等等都會用到它，而有了它也可以反推前述的東西，因此不能外流，此處只是隨便亂打，而且在開發模式，所以是沒有關係的。
             </p>
             <p>
-                如果你在思考這個 <code>flash</code> 的東西到底去哪裡了，可以看看 <code>session</code>，但一樣要記得先 import。應該可以看到類似
+                如果你在思考這個 <code>flash</code> 的東西到底去哪裡了，可以看看 <code>session</code>，但一樣要記得先 import
+                (<code>from flask import session</code>)。應該可以看到類似
                 <code>&lt;SecureCookieSession {'_flashes': [('meow', 'meow')]}&gt;</code> 的內容。這個訊息還有一個特性是，在被前端使用過之後就會自動從
                 <code>session</code> 中消失，所以同樣的訊息不會一直卡著。
             </p>
