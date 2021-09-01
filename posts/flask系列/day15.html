@@ -98,7 +98,8 @@
                 在這裡面我們定義了一個 <code>TestModel</code>，我們之後的測試都會換成繼承他，而非剛剛的
                 <code>unittest.TestCase</code>，也因為如此，接下來定義的函式都不是測試，而是給測試用的工具。在
                 <code>setUp</code> 還有 <code>tearDown</code> 跟剛剛做的事差不多，有差別的部份是我們新增了 <code>user_data</code> 和
-                <code>admin_data</code>，這在之後登入會用到。同時我們也用之前寫好的 <code>add_user</code> 來加入兩個測試用的使用者。還有我們也在
+                <code>admin_data</code>，這在之後登入會用到。同時我們也用之前寫好的 <code>add_user</code>
+                來加入兩個測試用的使用者，如果有需要測試貼文、留言的話，也可以自己加入測試的資料。還有我們也在
                 <code>tearDown</code> 加入了清除資料庫的動作。
             </p>
             <p>
