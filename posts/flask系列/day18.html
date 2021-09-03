@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 18 實作表單 (1)</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#引入">引入</a>
+        <a href="#LoginForm">LoginForm</a>
+        <a href="#RegisterForm">RegisterForm</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 18 實作表單 (1)</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                今天我們要開始使用 Flask-WTF 來做表單，我們要做的表單還不少，但我們每個都會實作。他的概念是用 class 的方式把表單寫起來，然後建立一個表單實體並傳入
+                <code>render_template</code> 讓 jinja 處理。
+            </p>
+            <p>
+                我們會加入一個新檔案 <code>forms.py</code>，他會放在 <code>app/</code> 裡面。
+            </p>
+        </div>
+        <div class="post_content" id="引入">
+            <h2><a href="#引入">引入</a></h2>
+            <p>
+                我們先來引入一些跟 Flask-WTF 有關的東西。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/ea25757ab85023f71acfe33b6e56d271.js"></script>
+            <p>
+                一開始我們先引入 <code>FlaskForm</code>，他會是我們之後所有表單繼承的對象。接下來我們引入了好幾個 field，他們基本上就是對應到 HTML 的那些 input type。比較麻煩的是
+                <code>EmailField</code> 要從 <code>wtforms.fields.html5</code> 引入，之後也會用到一些其他的 field 要從這裡引入，最後我們引入了一些
+                validator，他們是用來驗證使用者輸入是否正確的，等等我們會一個一個看到。
+            </p>
+        </div>
+        <div class="post_content" id="LoginForm">
+            <h2><a href="#LoginForm">LoginForm</a></h2>
+            <p>
+                首先來看看最簡單的登入表單，在這裡面我們只需要叫使用者輸入帳號、密碼，然後按下送出即可。在 Flask-WTF 裡面，這樣就是三個欄位。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/31669f32709bd95f8f4232c0695637b1.js"></script>
+            <p>
+                我們定義了一個 <code>LoginForm</code>，用來處理使用者的登入，接著如剛剛所說，他繼承了 <code>FLaskForm</code>。
+            </p>
+            <p>
+                他有三個欄位，分別是
+                <code>username</code>、<code>password</code>、<code>submit</code>，這些名字並不會顯示在網頁上，但是我們在處理模板及抓表單資料的時候會用到。接下來我們會分開解釋他們及其參數。
+            </p>
+            <ul>
+                <li>
+                    第一個是 <code>username</code>，很明顯就是用來填使用者名稱的。他是一個
+                    <code>StringField</code>，就是放文字的欄位。而他的第一個參數是這個欄位的名字，後面在 jinja
+                    那邊會用到，他在 HTML 是 label 的角色。<code>validators</code> 是規定這個欄位要遵守的規則，他是一個 list，Flask-WTF
+                    會一一檢查，沒過就會視為無效，到時候在寫藍圖的時候會看到怎麼判斷。這邊使用的是 <code>DataRequired</code>，對應到 HTML 就是 <code>input</code> 裡面的
+                    <code>required</code>。而他的確會在 HTML 的部份加上 <code>required</code>，但就算手動把它移掉，到後端他還是會檢查一次。最後是
+                    <code>render_kw</code>，基本上它就是一些額外的參數，像此處就是指定他的 <code>placeholder</code>，這樣在 HTML 那邊就會顯示出
+                    <code>placeholder="Username"</code>，同理，如果想加入 <code>id</code>，就可以在 <code>render_kw</code> 裡面加上
+                    <code>"id": "cat"</code> 之類的東西。
+                </li>
+                <li>
+                    第二個是密碼的欄位，基本上他跟前面的使用者名稱是一樣的，他們的差別就只有他是一個 <code>PasswordField</code>，也就是密碼欄位，所以它會自動在 HTML 變成
+                    <code>type="password"</code>。
+                </li>
+                <li>
+                    第三個不是一個使用者看起來像欄位的東西，他是提交出去的按鈕，也就是說 <code>type="submit"</code>，而他會用 <code>SubmitField</code>
+                    這個東西。他的第一個參數跟前兩個差不多，就是他的名字，但這個名字就會直接變成這個 submit 按鈕的文字，在 HTML 就是他的 <code>value</code>。
+                </li>
+            </ul>
+        </div>
+        <div class="post_content" id="RegisterForm">
+            <h2><a href="#RegisterForm">RegisterForm</a></h2>
+            <p>
+                剛剛第一個表單蠻簡單的，就少少三個欄位，但接下來要寫的註冊帳號表單就沒這麼輕鬆了，先來看看程式碼吧。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/73df49ab8f182c94cae6f32f42dc3d26.js"></script>
+            <p>
+                其實這次也就只有五個欄位，但是每一個欄位都有一堆麻煩的設定，我們一個一個來看。
+            </p>
+            <ul>
+                <li>
+                    第一個欄位是使用者名稱，我們在 <code>validators</code> 加了不少東西。首先是剛剛就有的 <code>DataRequired</code>，在此不再多說了。接下來是
+                    <code>Length</code>，它是用來限制長度的，<code>max</code> 和 <code>min</code> 分別代表上下限，後面的 <code>message</code>
+                    是當這個條件不被滿足時所要跳出的訊息 (在 <code>DataRequired</code> 也可以指定 <code>message</code>，在寫藍圖的時候我們會處理這個訊息並
+                    <code>flash</code> 到前端。最後一個是 <code>Regexp</code>，就是正規表示式
+                    (regular expression) 的意思，在這邊我們限制這個使用者名稱只能由英文字母、數字、下底線組成，如同下面的 <code>message</code> 所寫。
+                </li>
+                <li>
+                    第二個是密碼，一樣要有 <code>DataRequired</code>，同時也限制最短密碼要有六個字元，沒有上限。
+                </li>
+                <li>
+                    第三個是確認密碼的欄位，所以在他的 <code>validators</code> 我們加入了 <code>EqualTo</code>，他的第一個參數是要跟哪一個 field
+                    有相同的值，要放的是變數名稱，但用的是字串 (<code>"password"</code>)，而不是變數本身 (<code>password</code>)。
+                </li>
+                <li>
+                    第四個是填寫電子郵件的欄位，剛剛沒有出現過，要使用 <code>EmailField</code>。
+                </li>
+                <li>
+                    最後一個欄位跟剛剛接近，就是提交的按鈕，但在此處我們 <code>value</code> 設成 <code>Register</code>。
+                </li>
+            </ul>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+            <a
+                href="https://stackoverflow.com/questions/62831179/automatically-setting-the-id-html-attribute-of-a-form-element-in-flask-wtforms">Automatically
+                setting the id HTML attribute of a form element in flask-wtforms</a>
+            <a href="https://www.w3schools.com/tags/tag_input.asp">HTML input Tag</a>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
