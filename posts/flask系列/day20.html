@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 20 實作表單 (3)</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 20 實作表單 (3)</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                今天要來接續表單的製作，不同於前兩天的是，今天的主題比較明確，我們要寫各式各樣的 dashboard 篩選器。
+            </p>
+        </div>
+        <div class="post_content" id="DashboardFilter">
+            <h2><a href="#DashboardFilter">DashboardFilter</a></h2>
+            <p>
+                第一個就來看看貼文的篩選器。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/5d66bd71e16f1d07773779a0a4a86a13.js"></script>
+            <p>
+                這裡有一些之前沒出現過的東西，<code>DateField</code> 是一個用來放日期的欄位，他要從 <code>wtforms.fields.html5</code> 引入，他的 <code>format</code> 是指輸出的日期格式。<code>IntegerField</code> 跟 <code>DateField</code> 一樣從 <code>wtforms.fields.html5</code> 引入，他是一個輸入整數的欄位。<code>Optional</code> 是一個新的 validator，他跟其他 validator 是從同一個地方引入的，它的功用是在這個欄位沒有被填寫的時候不要去做其他的驗證，像是前兩個欄位就會分別做是否是日期跟是否是整數的驗證，如果沒有 <code>Optional</code> 的話，就會直接被擋掉，即便使用者沒有填資料。
+            </p>
+            <p>
+                上面的 filter 是給一般使用者用的，如果要使用的話就要開始時間和結束時間都要填，所以加上 <code>DataRequired</code>。但下面的是給管理員用的，一樣是二合一的表單，有可能只想用時間或是 <code>user_id</code> 來做篩選，所以不能有 <code>DataRequired</code>，而為了避免被型別驗證擋下來，我們使用 <code>Optional</code> 來避免後續的驗證。
+            </p>
+            <p>
+                理論上我們還是可以對 <code>start</code> 和 <code>end</code> 做一下兩個都要填的驗證，但此處就略過了。
+            </p>
+        </div>
+        <div class="post_content" id="UserFilterForm">
+            <h2><a href="#UserFilterForm">UserFilterForm</a></h2>
+            <p>
+                同樣的道理，我們也可以把第一個給一般使用者的篩選器拿來給管理員用來篩選使用者註冊時間，放在管理使用者的頁面。但當然不會這麼簡單就結束，還有一些其他的東西要加入。 
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/acb4758f3eeb4b2cfa4320818985d19f.js"></script>
+            <p>
+                這裡面有絕大部分都是從上面複製的，所以就不多加解釋。也一樣，我們可以在他後面加入其他 validator 甚至是自己寫的函式，但一樣就先跳過了。
+            </p>
+        <div class="post_content" id="結語">
+            <h2><a href="#結語">結語</a></h2>
+            <p>
+                會做篩選器表單不只是因為有一些新東西可以寫，也是因為後面在使用這個表單的時候會用到 cookie，這會是我們唯一一次使用他。
+            </p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="#References">References</a></h2>
+            <a href="https://wtforms.readthedocs.io/en/2.3.x/validators/#wtforms.validators.Optional">Optional</a>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
