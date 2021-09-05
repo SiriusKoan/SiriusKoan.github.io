@@ -26,6 +26,9 @@
     <a id="top-button" href="#"><span>TOP</span></a>
     <div id="toc">
         <a href="#前言">前言</a>
+        <a href="#posts&comments">posts & comments</a>
+        <a href="#UserSettingForm">UserSettingForm</a>
+        <a href="#AddUserForm">AddUserForm</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -57,8 +60,30 @@
                 <code>ValidationError</code>，他要從 <code>wtforms.validators</code> 引入，跟昨天那一堆 validator 同一個地方，而他參數的字串就是要顯示的訊息。
             </p>
         </div>
+        <div class="post_content" id="AddUserForm">
+            <h2><a href="#AddUserForm">AddUserForm</a></h2>
+            <p>
+                接著來看看管理員的新增使用者表單。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/66c9af6b1317fe5b80711a5d72960972.js"></script>
+            <p>
+                跟之前註冊的很像，比較特別的是他有一個 <code>BooleanField</code>，他到了 HTML 會變成常見的 checkbox，就可以讓管理員透過這個來調整要不要讓使用者變成管理員。而他需要另外引入，跟前面都不太一樣，他要從 <code>wtforms.fields.core</code> 引入。
+            </p>
+        </div>
+        <div class="post_content" id="posts&comments">
+            <h2><a href="#posts&comments">posts & comments</a></h2>
+            <p>
+                最後要來看到新增貼文和留言的表單。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/81a6b84fa7673df7c9f685e0515dff94.js"></script>
+            <p>
+                留言的表單沒甚麼好說，非常簡單易懂。比較特別的是貼文的表單，我們用了一個新東西 <code>PageDownField</code>，他允許我們邊編輯邊看 markdwon 長甚麼樣子，這個東西現在不會解釋，會等到寫 HTML 的時候再來處理。
+            </p>
+        </div>
         <div class="post_content attachment" id="References">
             <h2><a href="#References">References</a></h2>
+            <a href="https://hackmd.io/@shaoeChen/HJSpC9l6f?type=view">Flask實作_ext_13_Flask-Markdown</a>
+            <a href="https://wtforms.readthedocs.io/en/2.3.x/fields/#wtforms.fields.BooleanField">BooleanField</a>
         </div>
     </main>
     <footer>
