@@ -68,11 +68,12 @@
             </p>
             <p>
                 接著看到最上面的一堆引入，我們引入了 <code>LoginManager</code>，他是 <code>Flask-Login</code> 的核心。也引入了
-                <code>Mail</code>，他也是一個核心的概念，之後要寄信的時候就會直接找他。再來是剛剛弄好的
+                <code>Mail</code>，他也是一個核心的概念，之後要寄信的時候就會直接找他。<code>Pagedown</code> 和 <code>Markdown</code>
+                也是相同的概念。再來是剛剛弄好的
                 <code>db</code>，我們也需要他來初始化。最後還有之前寫好的設定檔對照表，讓我們可以根據環境來決定要用哪個設定。
             </p>
             <p>
-                接下來看到在下面我們把 <code>LoginManager</code> 和 <code>Mail</code> 實體化，因為等等會用到這兩個實體去初始化。
+                接下來看到在下面我們把 <code>LoginManager</code>、<code>Mail</code>、<code>Pagedown</code> 和實體化，因為等等會用到這三個實體去初始化。
             </p>
             <p>
                 終於進入 <code>create_app</code> 函式本身了，當然我們需要先弄出 <code>app</code>，但這次的宣告和之前的範例有些不同，多了
@@ -83,8 +84,9 @@
                 <code>app.config.from_object</code>，這樣一來，我們就可以抓到之前寫的設定檔了。
             </p>
             <p>
-                最後是初始化的部分，我們需要把三個東西都初始化，這樣才能在往後的開發中使用。要初始化的方法是使用他們的 <code>init_app</code> 函式，並以 <code>app</code>
-                作為參數。其實也可以不要先實體化變成 <code>login_manager</code>，然後在 <code>init_app</code> 的位置初始化，像是
+                最後是初始化的部分，我們需要把五個東西都初始化，這樣才能在往後的開發中使用。要初始化的方法是使用他們的 <code>init_app</code> 函式，並以 <code>app</code>
+                作為參數。但 <code>Markdown</code> 比較特別，他沒有 <code>init_app</code> 這個函式，所以要像 <code>db</code>
+                那樣子做，而其他三個其實也可以不要先實體化變成 <code>login_manager</code>，然後在 <code>init_app</code> 的位置初始化，像是
                 <code>login_manager=LoginManager(app)</code>。但當然 <code>db</code> 沒有辦法這樣做，畢竟他在其他地方就定義好了。
             </p>
         </div>
