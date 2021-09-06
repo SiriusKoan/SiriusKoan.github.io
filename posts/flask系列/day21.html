@@ -26,6 +26,10 @@
     <a id="top-button" href="#"><span>TOP</span></a>
     <div id="toc">
         <a href="#前言">前言</a>
+        <a href="#main_bp">main_bp</a>
+        <a href="#user_bp">user_bp</a>
+        <a href="#admin_bp">admin_bp</a>
+        <a href="#後記">後記</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -126,6 +130,12 @@
                     <code>/manage_user</code> 是管理使用者的頁面，可以看到所有使用者，然後也可以刪除、更新 (<code>manage_user_backend</code>) 及新增 (表單)。
                 </li>
             </ul>
+        </div>
+        <div class="post_content" id="後記">
+            <h2><a href="#後記">後記</a></h2>
+            <p>
+                在這邊全部結束之後，我們就可以把之前 <code>app/__init__.py</code> 那些對於藍圖的註解移除，然後使用 <code>flask shell</code> 來看看 <code>app.url_map</code> 有沒有一大堆東西，如果有那基本上就是成功了。
+            </p>
         </div>
     </main>
     <footer>
