@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 24 實作 user_bp (2)</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 24 實作 user_bp (2)</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                今天要進入 <code>user_bp</code>，但因為他路徑太多太複雜，所以我們必須分段處理，而今天要處理的是驗證的部分。
+            </p>
+        </div>
+        <divv class="post_content" id="/register">
+            <h2><a href="#/register">/register</a></h2>
+            <p>
+                理論上我們現在應該要寫一個資料庫的函式來處理新增使用者，但我們之前在寫 <code>manage.py</code> 的時候已經處理過了，所以就把舊的拿來用就好。
+            </p>
+            <p>
+                我們直接進入 HTML 的部分。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/d5033ba8521adbe1a443c669c36d71f7.js"></script>
+            <p>
+                同樣地，他也是直接繼承 <code>base.html</code>。接著我們又使用了等等會從 <code>render_template</code> 送進來的 <code>form</code>，他當然就是 <code>RegisterForm</code>，所以我們乖乖把他的每一個欄位都填上去，當然也不要忘了 <code>csrf_token</code>。
+            </p>
+            <p>
+                於是我們很快來到了路徑本身，基本上該引入的新東西昨天都引入了，額外需要的只有 <code>RegisterForm</code> 和在 <code>app/database/</code> 裡面的 <code>add_user</code>。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/15b4f7bab0c29688a3c76a1b1a3a21c5.js"></script>
+            <p>
+                跟昨天類似，我們先判斷使用者有沒有登入，如果沒有的話就處理這個頁面該處理的東西。接下來當表單驗證通過後，就繼續處理，把表單資料的使用者名稱、密碼、電子郵件抓出來，然後送給資料庫處理，處理過後如果傳回 <code>False</code>，那就代表這個使用者名稱或是電子郵件用過了，就 <code>flash</code> 出錯誤訊息；如果通過的話，那就重新導向到登入頁面給使用者登入，不過當然也可以在註冊結束後就直接用 <code>login_user</code> 把它登入。
+            </p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="References">References</a></h2>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
