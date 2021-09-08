@@ -26,6 +26,9 @@
     <a id="top-button" href="#"><span>TOP</span></a>
     <div id="toc">
         <a href="#前言">前言</a>
+        <a href="#/register">/register</a>
+        <a href="#/setting">/setting</a>
+        <a href="#base.html">base.html</a>
         <a href="#References">References</a>
     </div>
     <main>
@@ -33,7 +36,7 @@
         <div class="post_content" id="前言">
             <h2><a href="#前言">前言</a></h2>
             <p>
-                今天要進入 <code>user_bp</code>，但因為他路徑太多太複雜，所以我們必須分段處理，而今天要處理的是驗證的部分。
+                今天要繼續 <code>user_bp</code>，今天會把驗證的部分處理掉。
             </p>
         </div>
         <divv class="post_content" id="/register">
@@ -56,8 +59,48 @@
                 跟昨天類似，我們先判斷使用者有沒有登入，如果沒有的話就處理這個頁面該處理的東西。接下來當表單驗證通過後，就繼續處理，把表單資料的使用者名稱、密碼、電子郵件抓出來，然後送給資料庫處理，處理過後如果傳回 <code>False</code>，那就代表這個使用者名稱或是電子郵件用過了，就 <code>flash</code> 出錯誤訊息；如果通過的話，那就重新導向到登入頁面給使用者登入，不過當然也可以在註冊結束後就直接用 <code>login_user</code> 把它登入。
             </p>
         </div>
-        <div class="post_content attachment" id="References">
-            <h2><a href="References">References</a></h2>
+        <div class="post_content" id="/setting">
+            <h2><a href="#/setting">/setting</a></h2>
+            <p>
+                接下來要進入使用者設定的頁面，但進入路徑之前，我們必須先寫一點資料庫的東西。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/a2b20396d3f7f6e3fc60dbd772e13822.js"></script>
+            <p>
+                裡面的 <code>user_to_dict</code> 是一個輔助的函式，基本上就是把使用者資料從 <code>Users</code> 物件換成 dict。<code>render_user_data</code> 則是透過 <code>user_id</code> 抓出使用者，接著再用剛剛的函式把他轉成 dict 然後傳回去。<code>update_user_data</code> 是用來更新使用者資訊的，邏輯上來說，我們會看它傳入了甚麼東西，然後一個一個把它更新，如果遇到 <code>password</code> 的話就要先 <code>generate_password_hash</code>，最後如果 update 失敗的話就代表使用者名稱或是電子郵件已經被使用 (unique constraint) (也有可能不是，但此處方便起見就先當是，可以自己寫一個 check 比較好)，那就回傳一條錯誤訊息。
+            </p>
+            <p>
+                這邊比較要注意的是他更新的方法，我們可以注意到我們更新的東西是 query (但被 <code>filter_by</code> 過)，而不是一個物件或是一個 list 的物件，如果再把它變成物件之後 (<code>.all()</code>)，那就會錯誤。他更新需要使用 <code>update</code> 這個函式，他的參數是一個 dict，所以也可以直接把 <code>kwargs</code> 丟進去 (如果有使用的話)。
+            </p>
+            <p>
+                接下來要看到 HTML 的部分。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/a069ceab64490c3d9835a7c9d240b987.js"></script>
+            <p>
+                一樣很簡單，這個 <code>form</code> 當然就是 <code>UserSettingForm</code>，可以去複習一下他的欄位。
+            </p>
+            <p>
+                最後就進入路徑了，廢話不多說直接來看。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/f22867365f9e3db2486a7294fcaa3998.js"></script>
+            <p>
+                在最一開始我們先抓出使用者的資料，接著我們建立 <code>form</code>，但這次我們加入了 <code>email=data["email"]</code>，用這個方法就可以直接改掉 <code>email</code> 欄位的值，這樣就可以讓 <code>email</code> 直接顯示在前端，使用者如果不改的話就直接案送出即可。
+            </p>
+            <p>
+                後面基本上就跟之前類似，比較不同的是這次我們會直接把 <code>update_user_data</code> 的回傳值當成錯誤訊息然後 <code>flash</code> 出去。
+            </p>
+        </div>
+        <div class="post_content" id="base.html">
+            <h2><a href="#base.html">base.html</a></h2>
+            <p>
+                在今天的最後，我們要回到 <code>base.html</code>，然後修改他的 nav。最一開始在寫的時候我們只是放了註解在那邊，但是沒有判斷到底甚麼時候要用甚麼 nav，今天我們就要改掉這個部分。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/64b5da842d4f5eb0e943ec50803da186.js"></script>
+            <p>
+                我們直接使用了 <code>current_user</code> 這個變數，他不需要傳入，他本來就在，也跟我們在 flask 裡面用到的相同。一開始我們先判斷這個使用者是不是匿名，如果是的話那就只顯示 <code>/login</code>、<code>/register</code>，如果不是的話，就顯示 dashboard 等等，然後就再判斷他是不是管理員，如果是的話就再多顯示一些管理員的選項。
+            </p>
+            <p>
+                做完這些之後，就可以再打開網頁，然後看看他是不是順利判斷使用者的角色。
+            </p>
         </div>
     </main>
     <footer>
