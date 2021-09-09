@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 25 實作 user_bp (3)</title>
+    <link rel="icon" href="/img/me.jpg">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/gist.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="header-content">SiriusKoan</a>
+            <a href="/posts" class="header-content">Posts</a>
+            <a href="/about.html" class="header-content">About Me</a>
+        </nav>
+    </header>
+    <a id="top-button" href="#"><span>TOP</span></a>
+    <div id="toc">
+        <a href="#前言">前言</a>
+        <a href="#/post/add">/post/add</a>
+        <a href="#/post/edit">/post/edit</a>
+        <a href="#References">References</a>
+    </div>
+    <main>
+        <h1 id="title"><a href="#">Day 25 實作 user_bp (3)</a></h1>
+        <div class="post_content" id="前言">
+            <h2><a href="#前言">前言</a></h2>
+            <p>
+                我們今天還是沒有離開 <code>user_bp</code>，我們要來弄寫文章的頁面，也就是 markdown 上場的日子。
+            </p>
+        </div>
+        <div class="post_content" id="/post/add">
+            <h2><a href="#/post/add">/post/add</a></h2>
+            <p>
+                首先一樣要先來處理一下資料庫的部分，需要一個加入新貼文的函式。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/dc2f3de1ce841f115d530d2ea3e147e2.js"></script>
+            <p>
+                之前都是使用 <code>Users</code> 這個物件，這次要換成用 <code>Posts</code> 了。他會需要傳入一些貼文的基本資料，然後把他加入資料庫，如果有錯誤的話就代表他標題重複了 (空值的部分已經讓 Flask-WTF 處理掉了)。
+            </p>
+            <p>
+                接下來是 HTML 的部分，他有一些些跟一般表單不一樣的地方。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/e5097f488102c0e2754d88f47712fefc.js"></script>
+            <p>
+                他有一個 <code>{{ pagedown.include_pagedown() }}</code>，這是用來引入外部 JS 來即使顯示 markdown 用的。要注意它是 <code>pagedown</code> 的東西，而不是 <code>form</code>，而這個 <code>pagedown</code> 就是一開始在 <code>create_app</code> 裡面初始化用的那個。接下來會看到有一個 <code>route</code> 變數，這樣 <code>render_template</code> 的時候就可以傳入表單的提交路徑。
+            </p>
+            <p>
+                接下來就跟之前差不多了，比較可以看一下的是 <code>form.content</code>，我們用的是最直接簡單的方法，但也可以稍微調整他，有興趣的話可以去他的 <a href="https://github.com/miguelgrinberg/Flask-PageDown">GitHub repo</a> 看看範例。
+            </p>
+            <p>
+                最後就要來看路徑了，基本上跟之前的結構都一樣。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/3fabbbaf4ba7140c346d3b6181fa8de6.js"></script>
+            <p>
+                差不多就是把欄位都抓出來，然後 <code>add_post</code>，沒問題就跳到 dashboard，有問題就繼續待在這裡。但是在 <code>render_template</code> 的時候，我們加入了一個 <code>route</code>，就是剛剛 <code>write.html</code> 裡面的，決定表單要送去哪。
+            </p>
+        </div>
+        <div class="post_content" id="/post/edit">
+            <h2><a href="#/post/edit">/post/edit</a></h2>
+            <p>
+                寫完文章就要來改文章，所以接下來我們來處理編輯文章的頁面。一樣，先來看看資料庫。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/66d141a0f169f01c4f30c1664c758046.js"></script>
+            <p>
+                這裡有 <code>edit_post</code> 和 <code>render_post</code> 兩個函式，前者是用來編輯文章，也就是把現有的文章抓出來再修改內容，所以用 <code>post_id</code> 當參數；而後者是把文章轉成 dict 送出來。
+            </p>
+            <p>
+                依照慣例，我們應該要來寫 HTML，但這次不需要，因為我們可以直接拿剛剛的 <code>write.html</code> 來用。所以我們可以直接進入路徑的部分，可想而知，也會跟剛剛十分類似。
+            </p>
+            <script src="https://gist.github.com/SiriusKoan/2a85e5c0caf39254cc93b2f67329659d.js"></script>
+            <p>
+                這裡有比較不同的部分是在最前面我們先用剛剛的 <code>render_post</code> 把貼文的資料送出來，然後在建立表單的時候就直接把資料傳進去，就像昨天弄使用者設定頁面一樣。接下來就十分類似，傳不同的 <code>route</code> 給 jinja 處理，後面就都一樣了。這邊的 <code>url_for</code> 多了一個 <code>post_id</code> 的參數，會有他是因為這個編輯文章的頁面有一個 <code>post_id</code> 的變數，如果不指定的話，flask 會無所適從，然後就噴錯誤了。
+            </p>
+        </div>
+        <div class="post_content attachment" id="References">
+            <h2><a href="References">References</a></h2>
+            <a href="https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for">Create dynamic URLs in Flask with url_for()</a>
+            <a href="https://github.com/miguelgrinberg/Flask-PageDown">Flask-PageDown</a>
+        </div>
+    </main>
+    <footer>
+        <p id="copyright">© 2021 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
+    </footer>
+</body>
+
+</html>
