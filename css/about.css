@@ -2,7 +2,6 @@ body {
     background-color: #343535;
     margin: 0px;
     height: 100vh;
-    overflow: hidden;
 }
 
 main {
@@ -17,6 +16,20 @@ h1 {
 
 h2 {
     font-weight: normal;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #8bb0be;
+    text-decoration: none;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    color: gray;
+    text-decoration: underline;
 }
 
 .ripple {
@@ -41,22 +54,26 @@ h2 {
     animation-timing-function: ease-out;
 }
 
-.info div {
+.info .contact {
     display: flex;
     flex-direction: row;
+}
+
+.info li {
+    padding-top: 1rem;
 }
 
 .info .description {
     padding: 15px;
 }
 
-.info a {
+.info .contact a {
     width: 35px;
     margin: 10px 8px 10px 8px;
     display: inline-block;
 }
 
-.info a:hover {
+.info .contact a:hover {
     filter: opacity(80%);
     transform: scale(1.1);
 }
@@ -76,10 +93,10 @@ h2 {
     text-decoration: underline;
 }
 
-#copyright {
+/* #copyright {
     position: absolute;
     bottom: 0;
-}
+} */
 
 @keyframes ripple-effect {
     from {

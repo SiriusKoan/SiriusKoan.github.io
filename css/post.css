@@ -188,10 +188,6 @@ img {
     display: table-cell;
 }
 
-#copyright {
-    margin-top: 100px;
-}
-
 @media (max-width: 750px) {
     main {
         margin-left: 50px;
