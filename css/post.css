@@ -3,8 +3,8 @@ html {
 }
 
 body {
-    background-color: #343535;
-    margin: 0px;
+    background-color: #074572;
+    margin: 0;
 }
 
 main {
@@ -48,7 +48,7 @@ img {
 
 .post_content h2 a::before {
     content: "# ";
-    color: rgb(56, 135, 161);
+    color: rgb(238, 236, 138);
     ;
 }
 
@@ -76,7 +76,7 @@ img {
 }
 
 .post_content a {
-    color: #BABABA;
+    color: rgb(235, 235, 168);
     text-decoration: none;
     margin-top: 4px;
     margin-bottom: 4px;
@@ -84,7 +84,6 @@ img {
 }
 
 .post_content a:hover {
-    color: gray;
     text-decoration: underline;
 }
 

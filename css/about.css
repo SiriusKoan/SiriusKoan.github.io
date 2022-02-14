@@ -1,6 +1,5 @@
 body {
-    background-color: #343535;
-    margin: 0px;
+    background-color: #074572;
     height: 100vh;
 }
 
@@ -20,7 +19,7 @@ h2 {
 }
 
 a {
-    color: #8bb0be;
+    color: #f5f396;
     text-decoration: none;
     margin-top: 4px;
     margin-bottom: 4px;
