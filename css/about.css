@@ -19,7 +19,7 @@ h2 {
 }
 
 a {
-    color: #f5f396;
+    color: #eeff6d;
     text-decoration: none;
     margin-top: 4px;
     margin-bottom: 4px;
@@ -67,18 +67,15 @@ a:hover {
 }
 
 .info .contact a {
-    width: 35px;
-    margin: 10px 8px 10px 8px;
-    display: inline-block;
-}
-
-.info .contact a:hover {
-    filter: opacity(80%);
-    transform: scale(1.1);
+    color: white;
+    width: 50px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .info img {
-    width: 100%;
+    width: 35px;
+    height: 35px;
     float: left;
     filter: brightness(110%);
 }
