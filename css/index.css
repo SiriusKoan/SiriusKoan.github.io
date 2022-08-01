@@ -1,6 +1,7 @@
 body {
     background-image: linear-gradient(to left top, #a1e7ff, #78bcdc, #5293b8, #2f6b95, #074572);
     background-size: cover;
+    background-repeat: no-repeat;
     margin: 0;
     user-select: none;
 }
