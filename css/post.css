@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background-color: #2f6b95;
+    background-color: #214e6e;
     margin: 0;
 }
 
@@ -20,7 +20,7 @@ main {
 code {
     padding: 3px;
     background-color: rgba(255, 255, 255, 0.05);
-    color: burlywood;
+    color: rgb(241, 166, 68);
 }
 
 img {
@@ -76,7 +76,7 @@ img {
 }
 
 .post_content a {
-    color: rgb(235, 235, 168);
+    color: #efff76;
     text-decoration: none;
     margin-top: 4px;
     margin-bottom: 4px;
