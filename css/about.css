@@ -89,10 +89,13 @@ a:hover {
     text-decoration: underline;
 }
 
-/* #copyright {
-    position: absolute;
-    bottom: 0;
-} */
+#copyright {
+    color: aliceblue;
+}
+
+#copyright a {
+    color: aliceblue;
+}
 
 @keyframes ripple-effect {
     from {

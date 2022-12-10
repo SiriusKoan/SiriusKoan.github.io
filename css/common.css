@@ -1,7 +1,13 @@
+body {
+    margin: 0;
+}
+
 header {
-    margin: 30px auto 30px 20px;
+    padding: 30px 20px;
     user-select: none;
     text-underline-offset: 4px;
+    background-color: #214e6e;
+    top: 0;
 }
 
 .header-content {
@@ -46,7 +52,6 @@ header {
     padding-bottom: 20px;
     width: 100%;
     text-align: center;
-    color: aliceblue;
     transition: opacity 1s ease-in;
     font-family: 'Alata', sans-serif;
     font-size: 15px;
@@ -54,7 +59,6 @@ header {
 }
 
 #copyright a {
-    color: aliceblue;
     text-decoration: none;
 }
 

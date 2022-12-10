@@ -6,6 +6,10 @@ body {
     user-select: none;
 }
 
+header {
+    background: none !important;
+}
+
 main {
     min-height: 80vh;
     display: flex;
@@ -26,8 +30,13 @@ main {
 }
 
 #copyright {
+    color: aliceblue;
     position: absolute;
     bottom: 0;
+}
+
+#copyright a {
+    color: aliceblue;
 }
 
 @keyframes fadeIn {

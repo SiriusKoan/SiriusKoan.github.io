@@ -3,24 +3,32 @@ html {
 }
 
 body {
-    background-color: #214e6e;
+    color: #0e1111;
+    background-color: #c1d6de;
     margin: 0;
 }
 
 main {
+    position: relative;
     min-height: 70vh;
     margin-left: 25vw;
     margin-right: 25vw;
+    padding-top: 20px;
     font-family: 'Noto Sans TC', sans-serif;
     animation-name: showUp;
     animation-duration: 1s;
     animation-timing-function: ease-out;
 }
 
+header {
+    position: sticky;
+    z-index: 10;
+}
+
 code {
     padding: 3px;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: rgb(241, 166, 68);
+    color: #f28d0a;
+    font-weight: 300;
 }
 
 img {
@@ -36,30 +44,26 @@ img {
 
 .post_content h2 {
     margin-left: -10px;
-    color: white;
     font-weight: normal;
 }
 
 .post_content h2 a {
-    color: white;
+    color: #0e1111;
     text-decoration: none;
     transition: 0.2s ease;
 }
 
 .post_content h2 a::before {
     content: "# ";
-    color: rgb(238, 236, 138);
-    ;
+    color: #f28d0a;
 }
 
 .post_content h2 a:hover {
     opacity: 0.5;
     text-decoration: none;
-    color: white;
 }
 
 .post_content p {
-    color: white;
     font-size: 18px;
     text-indent: 36px;
     line-height: 34px;
@@ -68,7 +72,6 @@ img {
 }
 
 .post_content ul {
-    color: white;
     font-size: 18px;
     line-height: 34px;
     letter-spacing: 0.4px;
@@ -76,7 +79,7 @@ img {
 }
 
 .post_content a {
-    color: #efff76;
+    color: #2432f0;
     text-decoration: none;
     margin-top: 4px;
     margin-bottom: 4px;
@@ -92,7 +95,7 @@ img {
 }
 
 .post_catalog {
-    color: aliceblue;
+    color: #0e1111;
     font-family: 'Noto Sans TC', sans-serif;
     text-decoration: none;
     font-size: 18px;
@@ -101,7 +104,7 @@ img {
 }
 
 .post_catalog a {
-    color: aliceblue;
+    color: #0e1111;
     text-decoration: none;
 }
 
@@ -114,40 +117,44 @@ img {
     letter-spacing: 1px;
 }
 
+#copyright {
+    color: #0e1111;
+}
+
+#copyright a {
+    color: #0e1111;
+}
+
 #title {
     margin-left: -20px;
-    color: white;
     font-size: 30px;
     font-weight: normal;
 }
 
 #title a {
-    color: white;
     text-decoration: none;
 }
 
 #title a:hover {
     opacity: 0.5;
     text-decoration: none;
-    color: white;
 }
 
 #toc {
     font-size: 16px;
     position: fixed;
     right: 60px;
-    top: 70px;
-    color: white;
+    top: 90px;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
 #toc a {
+    color: #0e1111;
     display: block;
     cursor: pointer;
     transition: 0.2s ease;
     margin-top: 5px;
     margin-bottom: 5px;
-    color: white;
     text-decoration: none;
 }
 
