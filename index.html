@@ -1,50 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
-
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SiriusKoan's website">
-    <title>SiriusKoan</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="icon" href="./img/me.jpg">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-    <script>
-        function homepage_animation() {
-            var name = "SiriusKoan";
-            var i = 0;
-            function typing_effect() {
-                if (i < name.length) {
-                    document.getElementById("typing-name").innerHTML += name.charAt(i);
-                    i++;
-                    setTimeout(typing_effect, 100);
-                }
-            }
-            setTimeout(typing_effect, 2000);
-        }
-    </script>
-</head>
-
-<body onload="homepage_animation();">
-    <h1></h1>
-    <header>
-        <nav>
-            <a href="/" class="header-content active">SiriusKoan</a>
-            <a href="/posts" class="header-content">Posts</a>
-            <a href="/about.html" class="header-content">About Me</a>
-        </nav>
-    </header>
-    <main>
-        <a href="/" id="avatar"><img src="./img/me.jpg"></a>
-        <p id="typing-name"></p>
-
-    </main>
-    <footer>
-        <p id="copyright">© 2022 <a href="https://github.com/SiriusKoan" target="_blank">SiriusKoan</a></p>
-    </footer>
-</body>
-
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
