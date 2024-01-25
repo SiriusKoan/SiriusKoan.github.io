@@ -1,0 +1,29 @@
+h2 {
+    font-weight: normal;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #efff76;
+    text-decoration: none;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    color: gray;
+    text-decoration: underline;
+}
+
+li {
+    padding-top: 1rem;
+}
+
+img {
+    width: 35px;
+    height: 35px;
+    float: left;
+    filter: brightness(110%);
+}
+
