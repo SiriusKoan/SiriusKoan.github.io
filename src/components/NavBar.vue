@@ -1,7 +1,7 @@
 <template>
-    <nav>
-        <RouterLink to="/" active-class="active">SiriusKoan</RouterLink>
-        <RouterLink to="/about" active-class="active">About Me</RouterLink>
+    <nav class="px-5 py-7 select-none underline-offset-4 bg-[#5B8BAD] top-0">
+        <RouterLink to="/" active-class="active" class="text-white decoration-solid ml-4 hover:opacity-70">SiriusKoan</RouterLink>
+        <RouterLink to="/about" active-class="active" class="text-white decoration-solid ml-4 hover:opacity-70">About Me</RouterLink>
     </nav>
 </template>
 
@@ -12,26 +12,6 @@ export default {
 </script>
 
 <style scoped>
-nav {
-	padding: 30px 20px;
-    user-select: none;
-    text-underline-offset: 4px;
-    background-color: #214e6e;
-    top: 0;
-}
-
-nav a {
-	color: white;
-	text-decoration: none;
-    font-size: 18px;
-    font-family: 'Alata', sans-serif;
-    margin-left: 10px;
-}
-
-nav a:hover {
-	filter: opacity(50%);
-}
-
 nav .active {
 	text-decoration: underline;
 }

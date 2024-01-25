@@ -1,11 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  font-family: 'Alata', sans-serif;
-  background-color: #214e6e;
+  @apply text-gray-100 font-sans bg-[#142e5a] m-0 min-h-[90vh];
 }
 
+#app {
+  @apply min-h-[90vh];
+}
+
+h1 {
+  @apply text-4xl font-bold my-4 mx-0;
+}
+
+h2 {
+  @apply font-bold text-2xl my-4 mx-0;
+}

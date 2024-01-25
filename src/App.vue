@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import Copyright from "./components/Copyright.vue"
 </script>
@@ -9,11 +9,3 @@ import Copyright from "./components/Copyright.vue"
   <RouterView />
   <Copyright />
 </template>
-
-<style scoped>
-@import "assets/base.css";
-
-#app {
-    margin: 0;
-}
-</style>
