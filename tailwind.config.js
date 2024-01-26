@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ["Arimo", "sans-serif"],
+      cursive: ["Dancing Script", "cursive"],
     },
     extend: {
       boxShadow: {
@@ -20,9 +21,8 @@ module.exports = {
             opacity: 0,
           },
         },
-      }
+      },
     },
   },
   plugins: [],
-}
-
+};
