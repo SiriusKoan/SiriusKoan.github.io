@@ -1,6 +1,9 @@
 <template>
   <div>
-    <img :src="avatar" class="rounded-full shadow-glow" />
+    <img
+      :src="avatar"
+      class="rounded-full shadow-glow"
+    >
   </div>
 </template>
 

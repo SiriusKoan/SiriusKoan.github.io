@@ -1,11 +1,11 @@
 <template>
   <div>
     <div
-      class="absolute bg-white rounded-full -z-10 animate-[snow_linear_infinite] top-0 shadow-glow"
       v-for="i in 100"
       :key="i"
       ref="flake"
-    ></div>
+      class="absolute bg-white rounded-full -z-10 animate-[snow_linear_infinite] top-0 shadow-glow"
+    />
   </div>
 </template>
 

@@ -1,12 +1,24 @@
 <template>
   <nav class="px-3 py-6 select-none underline-offset-4 bg-[#5B8BAD] top-0">
-    <RouterLink to="/" active-class="active" class="link"
-      >SiriusKoan</RouterLink
+    <RouterLink
+      to="/"
+      active-class="active"
+      class="link"
     >
-    <RouterLink to="/about" active-class="active" class="link"
-      >About Me</RouterLink
+      SiriusKoan
+    </RouterLink>
+    <RouterLink
+      to="/about"
+      active-class="active"
+      class="link"
     >
-    <a href="https://blog.siriuskoan.one" target="_blank" class="link">Blog</a>
+      About Me
+    </RouterLink>
+    <a
+      href="https://blog.siriuskoan.one"
+      target="_blank"
+      class="link"
+    >Blog</a>
   </nav>
 </template>
 

@@ -6,8 +6,7 @@
         href="https://github.com/SiriusKoan"
         target="_blank"
         class="decoration-none"
-        >SiriusKoan</a
-      >
+      >SiriusKoan</a>
     </p>
   </footer>
 </template>
