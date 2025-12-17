@@ -1,11 +1,11 @@
 <template>
-  <nav class="px-3 py-6 select-none underline-offset-4 top-0">
+  <nav class="px-3 py-6 select-none underline-offset-4 top-0 flex items-center">
     <RouterLink
       to="/"
       active-class="active"
-      class="link"
+      class="link inline-block w-8 mx-2"
     >
-      SiriusKoan
+      <AvatarImage />
     </RouterLink>
     <RouterLink
       to="/about"
@@ -23,8 +23,13 @@
 </template>
 
 <script>
+import AvatarImage from "./AvatarImage.vue";
+
 export default {
   name: "NavBar",
+  components: {
+    AvatarImage,
+  },
 };
 </script>
 

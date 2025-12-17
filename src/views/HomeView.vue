@@ -27,7 +27,7 @@ export default {
     <SnowEffect v-if="winter" />
     <a
       href="/"
-      class="m-5 w-[40vw] md:w-[10vw] hover:scale-110 transition-all duration-500"
+      class="m-5 w-[40vw] md:w-[10vw]"
     >
       <AvatarImage />
     </a>

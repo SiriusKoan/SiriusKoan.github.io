@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hover:scale-110 transition-all duration-500">
     <img
       :src="avatar"
       class="rounded-full shadow-glow"
