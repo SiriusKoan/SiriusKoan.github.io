@@ -14,7 +14,7 @@
       description="Telegram"
     />
     <LinkContainer
-      href="mailto:blog@siriuskoan.one"
+      href="mailto:me@siriuskoan.one"
       img-src="https://cdn4.iconfinder.com/data/icons/logo-brand/512/gmail_google_mail_email-256.png"
       img-alt="email"
       description="Email"
