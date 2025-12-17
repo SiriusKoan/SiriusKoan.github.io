@@ -1,5 +1,5 @@
 <template>
-  <nav class="px-3 py-6 select-none underline-offset-4 bg-[#5B8BAD] top-0">
+  <nav class="px-3 py-6 select-none underline-offset-4 top-0">
     <RouterLink
       to="/"
       active-class="active"

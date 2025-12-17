@@ -1,7 +1,7 @@
 <template>
   <footer class="m-0">
     <p class="p-3 w-full text-center">
-      © 2024
+      © 2026
       <a
         href="https://github.com/SiriusKoan"
         target="_blank"

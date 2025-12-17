@@ -4,7 +4,7 @@
       v-for="i in 100"
       :key="i"
       ref="flake"
-      class="absolute bg-white rounded-full -z-10 animate-[snow_linear_infinite] top-0 shadow-glow"
+      class="absolute bg-white rounded-full -z-10 animate-[snow_linear_infinite] top-0 shadow-glow opacity-0 [animation-fill-mode:both]"
     />
   </div>
 </template>
