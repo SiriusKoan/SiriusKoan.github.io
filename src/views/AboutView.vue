@@ -23,5 +23,8 @@ export default {
     AboutExperienceSection,
     AboutContactSection,
   },
+  mounted() {
+    document.body.style.backgroundColor = '#111214';
+  },
 };
 </script>

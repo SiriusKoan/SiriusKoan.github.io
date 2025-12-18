@@ -17,6 +17,9 @@ export default {
       return month === 10 || month === 11 || month === 0 || month === 1;
     },
   },
+  mounted() {
+    document.body.style.backgroundColor = '#030c1c';
+  },
 };
 </script>
 
