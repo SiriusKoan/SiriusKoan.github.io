@@ -1,15 +1,14 @@
 <template>
-  <div class="flex flex-row">
+  <div class="pr-0 xl:pr-5 flex flex-row">
     <a
       :href="href"
       target="_blank"
-      class="w-14 inline-flex items-center"
+      class="flex justify-center items-center"
     >
-      <img
-        :src="imgSrc"
-        :alt="imgAlt"
+      <FontAwesomeIcon
+        :icon="icon"
         class="w-[35px] h-[35px] float-left"
-      >
+      />
       <span class="p-4">{{ description }}</span>
     </a>
   </div>
@@ -20,8 +19,7 @@ export default {
   name: "LinkContainer",
   props: {
     href: String,
-    imgSrc: String,
-    imgAlt: String,
+    icon: [String, Array],
     description: String,
   },
 };

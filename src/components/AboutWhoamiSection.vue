@@ -1,17 +1,22 @@
 <template>
-  <div class="my-5">
-    <h2>Whoami</h2>
-    <ListNode> siriuskoan </ListNode>
-    <ListNode> Taipei, Taiwan </ListNode>
+  <div class="flex flex-col items-center justify-center py-8">
+    <div class="mb-8 w-1/2 md:w-1/3 lg:w-1/6">
+      <AvatarImage />
+    </div>
+    <div>
+      <NameTypingEffect />
+    </div>
   </div>
 </template>
 
 <script>
-import ListNode from "./ListNode.vue";
+import AvatarImage from "./AvatarImage.vue";
+import NameTypingEffect from "./NameTypingEffect.vue";
 export default {
   name: "AboutWhoamiSection",
   components: {
-    ListNode,
+    AvatarImage,
+    NameTypingEffect,
   },
 };
 </script>

@@ -1,24 +1,27 @@
 <template>
-  <div class="my-5">
-    <h2>Contact Me</h2>
-    <LinkContainer
-      href="https://github.com/SiriusKoan"
-      img-src="https://cdn0.iconfinder.com/data/icons/octicons/1024/mark-github-512.png"
-      img-alt="github"
-      description="GitHub"
-    />
-    <LinkContainer
-      href="https://telegram.me/SiriusKoan"
-      img-src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/335_Telegram_logo-512.png"
-      img-alt="telegram"
-      description="Telegram"
-    />
-    <LinkContainer
-      href="mailto:me@siriuskoan.one"
-      img-src="https://cdn4.iconfinder.com/data/icons/logo-brand/512/gmail_google_mail_email-256.png"
-      img-alt="email"
-      description="Email"
-    />
+  <div class="my-0 py-0 flex flex-col xl:flex-row gap-8 items-center">
+    <div class="w-full xl:w-1/2 flex flex-col items-center justify-center">
+      <h2 class="text-lg font-semibold">
+        Contact Me
+      </h2>
+    </div>
+    <div class="w-full xl:w-1/2 xl:flex-row xl:justify-start flex flex-col items-center justify-center">
+      <LinkContainer
+        href="https://github.com/SiriusKoan"
+        icon="fab fa-github"
+        description="GitHub"
+      />
+      <LinkContainer
+        href="https://telegram.me/SiriusKoan"
+        icon="fab fa-telegram"
+        description="Telegram"
+      />
+      <LinkContainer
+        href="https://linkedin.com/in/pei-hsun-kuan"
+        icon="fab fa-linkedin-in"
+        description="LinkedIn"
+      />
+    </div>
   </div>
 </template>
 
@@ -31,3 +34,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>

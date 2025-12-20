@@ -1,7 +1,7 @@
 <template>
   <footer class="m-0">
     <p class="p-3 w-full text-center">
-      © 2026
+      © {{ currentYear }}
       <a
         href="https://github.com/SiriusKoan"
         target="_blank"
@@ -14,5 +14,10 @@
 <script>
 export default {
   name: "Copyright",
+  computed: {
+    currentYear() {
+      return new Date().getFullYear();
+    }
+  }
 };
 </script>
