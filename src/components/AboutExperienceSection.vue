@@ -28,7 +28,7 @@
           href="https://it.cs.nycu.edu.tw/"
           target="_blank"
           class="underline"
-        >CS Computer Center</a>, NYCU
+        >CS Information Technology Center</a>, NYCU
       </ListNode>
       <ListNode>
         Intern at
