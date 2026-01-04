@@ -18,7 +18,12 @@
       href="https://blog.siriuskoan.one"
       target="_blank"
       class="link"
-    >Blog</a>
+    >
+      <FontAwesomeIcon
+        icon="fas fa-external-link-alt"
+        class="w-4 h-4 mr-1"
+      /> Blog
+    </a>
   </nav>
 </template>
 

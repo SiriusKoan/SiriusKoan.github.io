@@ -38,15 +38,6 @@
           class="underline"
         >A&R Research Capital</a>
       </ListNode>
-      <ListNode>
-        Former club leader of
-        <a
-          href="http://cnmc.tw/"
-          target="_blank"
-          class="underline"
-        >Campus Networking Management Club</a>
-        at HSNU
-      </ListNode>
     </div>
   </div>
 </template>
