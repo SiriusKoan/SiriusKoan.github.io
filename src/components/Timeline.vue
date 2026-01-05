@@ -2,7 +2,11 @@
   <div class="w-full">
     <div class="relative">
       <!-- Vertical line (color can be overridden via `lineClass`) -->
-      <div :class="['absolute left-[19px] top-5 bottom-0 w-0.5', lineClass]" />
+      <div
+        v-if="items && items.length > 1"
+        :class="['absolute left-[19px] top-5 w-0.5', lineClass]"
+        :style="{ height: lineHeight || 'auto' }"
+      />
 
       <div
         v-if="items && items.length"
@@ -11,6 +15,7 @@
         <div
           v-for="(item, idx) in items"
           :key="item.id ?? idx"
+          :ref="idx === items.length - 1 ? 'lastItemRef' : null"
           class="relative flex items-start"
         >
           <div
@@ -106,6 +111,66 @@ export default {
     defaultMarkerColor: {
       type: String,
       default: "bg-white",
+    },
+  },
+  data() {
+    return {
+      lineHeight: "",
+    };
+  },
+  watch: {
+    items: {
+      handler() {
+        this.$nextTick(() => {
+          this.updateLineHeight();
+        });
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.updateLineHeight();
+    });
+    window.addEventListener("resize", this.updateLineHeight);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.updateLineHeight);
+  },
+  methods: {
+    updateLineHeight() {
+      try {
+        if (!this.items || this.items.length <= 1) {
+          this.lineHeight = "";
+          return;
+        }
+
+        const lastItemRef = this.$refs.lastItemRef;
+        if (!lastItemRef) {
+          return;
+        }
+
+        const lastItem = Array.isArray(lastItemRef) ? lastItemRef[0] : lastItemRef;
+        if (!lastItem) {
+          return;
+        }
+
+        const lastMarker = lastItem.querySelector(".flex-shrink-0");
+        const relativeContainer = this.$el.querySelector(".relative");
+
+        if (!lastMarker || !relativeContainer) {
+          return;
+        }
+
+        const markerRect = lastMarker.getBoundingClientRect();
+        const containerRect = relativeContainer.getBoundingClientRect();
+        const markerCenterFromTop =
+          markerRect.top - containerRect.top + markerRect.height / 2;
+
+        this.lineHeight = `${markerCenterFromTop}px`;
+      } catch (error) {
+        console.error("Error updating timeline line height:", error);
+      }
     },
   },
 };
