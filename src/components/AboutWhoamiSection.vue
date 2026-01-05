@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center py-8">
-    <div class="mb-8 w-1/2 md:w-1/3 lg:w-1/6">
+    <div class="mb-8 w-1/2 md:w-1/4 lg:w-[10%]">
       <AvatarImage />
     </div>
     <div>

@@ -25,7 +25,7 @@
               <img
                 :src="item.image"
                 :alt="item.title"
-                class="w-full h-full object-cover object-center"
+                class="w-[85%] h-[85%] object-cover object-center"
               >
             </template>
             <FontAwesomeIcon
@@ -41,24 +41,18 @@
           </div>
 
           <div class="ml-4 bg-gray-800 p-4 rounded-lg shadow-md flex-1">
-            <div class="flex flex-col xl:flex-row xl:justify-between xl:items-center mb-1">
-              <h3 class="text-lg font-semibold text-white">
-                {{ item.title }}
-              </h3>
+            <div class="flex flex-col xl:flex-row xl:justify-between xl:items-center">
+              <h3
+                class="text-lg font-semibold text-white"
+                v-html="item.title"
+              />
               <span class="text-sm text-gray-400">{{ item.date }}</span>
             </div>
             <p
               v-if="item.description"
               class="text-gray-400"
-            >
-              {{ item.description }}
-            </p>
-            <div
-              v-if="item.meta"
-              class="mt-2 text-sm text-gray-400"
-            >
-              {{ item.meta }}
-            </div>
+              v-html="item.description"
+            />
           </div>
         </div>
       </div>
@@ -87,7 +81,6 @@ export default {
      *   title: string,
      *   date?: string,
      *   description?: string,
-     *   meta?: string,
      *   image?: string, // URL to an image for the marker (e.g., school or organization logo)
      *   imageBgClass?: string, // tailwind bg color applied to the marker when an image is used (defaults to white)
      *   icon?: string | Array, // passed to FontAwesomeIcon (e.g. 'fas fa-graduation-cap' or ['fas', 'graduation-cap'])

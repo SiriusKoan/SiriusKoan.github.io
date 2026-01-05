@@ -1,7 +1,7 @@
 <template>
   <div class="my-0 py-0 flex flex-col xl:flex-row gap-8 items-center">
     <div class="w-full xl:w-1/2 flex flex-col items-center justify-center">
-      <h2 class="text-lg font-semibold">
+      <h2 class="text-2xl font-semibold text-center">
         Contact Me
       </h2>
     </div>
