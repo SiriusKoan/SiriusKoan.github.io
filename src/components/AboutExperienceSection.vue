@@ -35,6 +35,14 @@ export default {
           imageBgClass: "bg-white",
         },
         {
+          id: "cirda",
+          title: 'Part-Time Assistant at <a href="https://cirda.nycu.edu.tw" target="_blank" class="underline">NYCU CIRDA</a>',
+          date: "2025/03 - Present",
+          description: '',
+          image: "/nycu.png",
+          imageBgClass: "bg-white",
+        },
+        {
           id: "nchc",
           title: 'Part-Time Assistant at <a href="https://www.nchc.org.tw/" target="_blank" class="underline">NCHC</a>',
           date: "2025/01 - Present",
