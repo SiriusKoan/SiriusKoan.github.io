@@ -27,6 +27,14 @@ export default {
     return {
       items: [
         {
+          id: "tsmc-it",
+          title: 'Intern at <a href="https://www.tsmc.com/" target="_blank" class="underline">TSMC</a> IT',
+          date: "2026/07 - 2026/08",
+          description: '',
+          image: "/tsmc.png",
+          imageBgClass: "bg-white",
+        },
+        {
           id: "nchc",
           title: 'Part-Time Assistant at <a href="https://www.nchc.org.tw/" target="_blank" class="underline">NCHC</a>',
           date: "2025/01 - Present",
